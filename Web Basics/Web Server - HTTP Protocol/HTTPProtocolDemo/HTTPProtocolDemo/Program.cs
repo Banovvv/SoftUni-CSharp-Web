@@ -7,7 +7,7 @@ namespace HTTPProtocolDemo
     public class Program
     {
         private const string _newline = "\r\n";
-        public static async void Main()
+        public static async Task Main()
         {
             TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 8585);
 
