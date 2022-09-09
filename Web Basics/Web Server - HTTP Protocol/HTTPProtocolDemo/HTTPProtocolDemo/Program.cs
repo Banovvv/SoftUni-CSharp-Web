@@ -7,7 +7,7 @@ namespace HTTPProtocolDemo
     public class Program
     {
         private const string _newline = "\r\n";
-        public static void Main()
+        public static async void Main()
         {
             TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 8585);
 
@@ -17,37 +17,42 @@ namespace HTTPProtocolDemo
             {
                 TcpClient tcpClient = tcpListener.AcceptTcpClient();
 
-                using (NetworkStream networkStream = tcpClient.GetStream())
-                {
-                    byte[] requestBytes = new byte[1000000];
-                    int bytesRead = networkStream.Read(requestBytes, 0, requestBytes.Length);
-                    string request = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
+                await ProccessRequestAsync(tcpClient);
+            }
+        }
 
-                    string responseText = @"<form action='/Account/Login' method='post'> 
+        private static async Task ProccessRequestAsync(TcpClient tcpClient)
+        {
+            using (NetworkStream networkStream = tcpClient.GetStream())
+            {
+                byte[] requestBytes = new byte[1000000];
+                int bytesRead = await networkStream.ReadAsync(requestBytes, 0, requestBytes.Length);
+                string request = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
+
+                string responseText = @"<form action='/Account/Login' method='post'> 
                                             <input type=text name='username' /> 
                                             <input type=password name='password' /> 
                                             <input type=date name='date' /> 
                                             <input type=submit value='login' /> 
                                             </form>";
 
-                    var response = "HTTP/1.0 200 OK" +
-                                   _newline +
-                                   "Server: SoftUniServer/1.0" +
-                                   _newline +
-                                   "Content-Type: text/html" +
-                                   _newline +
-                                   $"Content-Length: {responseText.Length}" +
-                                   _newline +
-                                   _newline +
-                                   responseText;
+                var response = "HTTP/1.0 200 OK" +
+                               _newline +
+                               "Server: SoftUniServer/1.0" +
+                               _newline +
+                               "Content-Type: text/html" +
+                               _newline +
+                               $"Content-Length: {responseText.Length}" +
+                               _newline +
+                               _newline +
+                               responseText;
 
-                    var responseBytes = Encoding.UTF8.GetBytes(response);
+                var responseBytes = Encoding.UTF8.GetBytes(response);
 
-                    networkStream.Write(responseBytes, 0, responseBytes.Length);
+                await networkStream.WriteAsync(responseBytes, 0, responseBytes.Length);
 
-                    Console.WriteLine(request);
-                    Console.WriteLine(new string('*', 50));
-                }
+                Console.WriteLine(request);
+                Console.WriteLine(new string('*', 50));
             }
         }
     }
