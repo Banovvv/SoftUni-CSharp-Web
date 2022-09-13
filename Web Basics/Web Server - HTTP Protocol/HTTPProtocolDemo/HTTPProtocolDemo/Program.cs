@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using HTTPProtocolDemo.Scrapers;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 

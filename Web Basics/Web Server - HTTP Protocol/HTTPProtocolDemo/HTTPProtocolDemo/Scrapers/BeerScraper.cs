@@ -14,7 +14,7 @@ namespace HTTPProtocolDemo.Scrapers
          @"https://pivoteka.bg/bg/bulgarian-craft-beer/page-5/"
         };
 
-        public static async void Scrape()
+        public static async Task<ICollection<Beer>> Scrape()
         {
             Console.OutputEncoding = Encoding.UTF8;
 
@@ -58,6 +58,8 @@ namespace HTTPProtocolDemo.Scrapers
             {
                 Console.WriteLine(beer);
             }
+
+            return beers;
         }
     }
 }
