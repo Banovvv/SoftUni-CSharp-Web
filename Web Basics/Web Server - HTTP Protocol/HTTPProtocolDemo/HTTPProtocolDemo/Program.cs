@@ -43,6 +43,8 @@ namespace HTTPProtocolDemo
                                _newline +
                                "Content-Type: text/html" +
                                _newline +
+                               $"Set-Cookie: sid={Guid.NewGuid()}" +
+                               _newline +
                                $"Content-Length: {responseText.Length}" +
                                _newline +
                                _newline +
