@@ -43,7 +43,7 @@ namespace HTTPProtocolDemo
                                _newline +
                                "Content-Type: text/html" +
                                _newline +
-                               $"Set-Cookie: sid={Guid.NewGuid()}" +
+                               $"Set-Cookie: auth.cookie={Guid.NewGuid()}; Expires={DateTime.UtcNow.AddDays(3)}" +
                                _newline +
                                $"Content-Length: {responseText.Length}" +
                                _newline +
