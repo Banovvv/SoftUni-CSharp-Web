@@ -42,7 +42,7 @@ namespace HTTPProtocolDemo
                                             <input type=date name='date' /> 
                                             <input type=submit value='login' /> 
                                             </form>";
-
+                
                 StringBuilder response = new StringBuilder();
                 response.AppendLine("HTTP/1.0 200 OK");
                 response.AppendLine("Server: SoftUniServer/1.0");
