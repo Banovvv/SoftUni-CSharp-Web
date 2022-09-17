@@ -30,6 +30,12 @@ namespace HTTPProtocolDemo
                 int bytesRead = await networkStream.ReadAsync(requestBytes, 0, requestBytes.Length);
                 string request = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
 
+                bool hasCookie = false;
+                if (request.Contains("Cookie:"))
+                {
+                    hasCookie = true;
+                }
+
                 string responseText = @"<form action='/Account/Login' method='post'> 
                                             <input type=text name='username' /> 
                                             <input type=password name='password' /> 
@@ -37,20 +43,19 @@ namespace HTTPProtocolDemo
                                             <input type=submit value='login' /> 
                                             </form>";
 
-                var response = "HTTP/1.0 200 OK" +
-                               _newline +
-                               "Server: SoftUniServer/1.0" +
-                               _newline +
-                               "Content-Type: text/html" +
-                               _newline +
-                               $"Set-Cookie: auth.cookie={Guid.NewGuid()}; Expires={DateTime.UtcNow.AddDays(3).ToString("R")}" +
-                               _newline +
-                               $"Content-Length: {responseText.Length}" +
-                               _newline +
-                               _newline +
-                               responseText;
+                StringBuilder response = new StringBuilder();
+                response.AppendLine("HTTP/1.0 200 OK");
+                response.AppendLine("Server: SoftUniServer/1.0");
+                response.AppendLine("Content-Type: text/html");
+                if (!hasCookie)
+                {
+                    response.AppendLine($"Set-Cookie: auth.cookie={Guid.NewGuid()}; Expires={DateTime.UtcNow.AddDays(3).ToString("R")}; HttpOnly;");
+                }
+                response.AppendLine($"Content-Length: {responseText.Length}");
+                response.AppendLine();
+                response.AppendLine(responseText);
 
-                var responseBytes = Encoding.UTF8.GetBytes(response);
+                var responseBytes = Encoding.UTF8.GetBytes(response.ToString());
 
                 await networkStream.WriteAsync(responseBytes, 0, responseBytes.Length);
 
