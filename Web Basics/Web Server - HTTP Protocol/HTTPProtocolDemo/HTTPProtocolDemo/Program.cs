@@ -49,12 +49,6 @@ namespace HTTPProtocolDemo
 
                 _sessionStorage[sid]++;
 
-                bool hasCookie = false;
-                if (request.Contains("Cookie:"))
-                {
-                    hasCookie = true;
-                }
-
                 string responseText = @$"<h1>Hello for the {_sessionStorage[sid]} time</h1>
                                          <h4>{DateTime.UtcNow:R}</h4>
                                          <form action='/Account/Login' method='post'> 
@@ -68,7 +62,7 @@ namespace HTTPProtocolDemo
                 response.AppendLine("HTTP/1.0 200 OK");
                 response.AppendLine("Server: SoftUniServer/1.0");
                 response.AppendLine("Content-Type: text/html");
-                if (!hasCookie)
+                if (!_sessionStorage.ContainsKey(sid))
                 {
                     response.AppendLine($"Set-Cookie: sid={sid}; Expires={DateTime.UtcNow.AddDays(3):R}; HttpOnly;");
                 }
