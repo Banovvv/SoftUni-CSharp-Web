@@ -21,7 +21,7 @@ namespace HTTPProtocolDemo
             {
                 TcpClient tcpClient = tcpListener.AcceptTcpClient();
 
-                await ProccessRequestAsync(tcpClient);
+                ProccessRequestAsync(tcpClient);
             }
         }
 
