@@ -56,12 +56,13 @@ namespace HTTPProtocolDemo
                 }
 
                 string responseText = @$"<h1>Hello for the {_sessionStorage[sid]} time</h1>
-                                            <form action='/Account/Login' method='post'> 
-                                            <input type=text name='username' /> 
-                                            <input type=password name='password' /> 
-                                            <input type=date name='date' /> 
-                                            <input type=submit value='login' /> 
-                                            </form>";
+                                         <h4>{DateTime.UtcNow:R}</h4>
+                                         <form action='/Account/Login' method='post'> 
+                                         <input type=text name='username' /> 
+                                         <input type=password name='password' /> 
+                                         <input type=date name='date' /> 
+                                         <input type=submit value='login' /> 
+                                         </form>";
                 
                 StringBuilder response = new StringBuilder();
                 response.AppendLine("HTTP/1.0 200 OK");
@@ -69,7 +70,7 @@ namespace HTTPProtocolDemo
                 response.AppendLine("Content-Type: text/html");
                 if (!hasCookie)
                 {
-                    response.AppendLine($"Set-Cookie: sid={sid}; Expires={DateTime.UtcNow.AddDays(3).ToString("R")}; HttpOnly;");
+                    response.AppendLine($"Set-Cookie: sid={sid}; Expires={DateTime.UtcNow.AddDays(3):R}; HttpOnly;");
                 }
                 response.AppendLine($"Content-Length: {responseText.Length}");
                 response.AppendLine();
