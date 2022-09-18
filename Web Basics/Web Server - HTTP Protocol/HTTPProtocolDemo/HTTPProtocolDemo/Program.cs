@@ -2,12 +2,15 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace HTTPProtocolDemo
 {
     public class Program
     {
         private const string _newline = "\r\n";
+        private static Dictionary<string, int> _sessionStorage = new Dictionary<string, int>();
+
         public static async Task Main()
         {
             TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 8585);
@@ -30,13 +33,30 @@ namespace HTTPProtocolDemo
                 int bytesRead = await networkStream.ReadAsync(requestBytes, 0, requestBytes.Length);
                 string request = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
 
+                var sid = Guid.NewGuid().ToString();
+
+                var match = Regex.Match(request, @"sid=[^\n]*\r\n");
+
+                if (match.Success)
+                {
+                    sid = match.Value.Substring(4);
+                }
+
+                if (!_sessionStorage.ContainsKey(sid))
+                {
+                    _sessionStorage.Add(sid, 0);
+                }
+
+                _sessionStorage[sid]++;
+
                 bool hasCookie = false;
                 if (request.Contains("Cookie:"))
                 {
                     hasCookie = true;
                 }
 
-                string responseText = @"<form action='/Account/Login' method='post'> 
+                string responseText = @$"<h1>Hello for the {_sessionStorage[sid]} time</h1>
+                                            <form action='/Account/Login' method='post'> 
                                             <input type=text name='username' /> 
                                             <input type=password name='password' /> 
                                             <input type=date name='date' /> 
@@ -49,7 +69,7 @@ namespace HTTPProtocolDemo
                 response.AppendLine("Content-Type: text/html");
                 if (!hasCookie)
                 {
-                    response.AppendLine($"Set-Cookie: auth.cookie={Guid.NewGuid()}; Expires={DateTime.UtcNow.AddDays(3).ToString("R")}; HttpOnly;");
+                    response.AppendLine($"Set-Cookie: sid={sid}; Expires={DateTime.UtcNow.AddDays(3).ToString("R")}; HttpOnly;");
                 }
                 response.AppendLine($"Content-Length: {responseText.Length}");
                 response.AppendLine();
