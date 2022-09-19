@@ -1,2 +1,25 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using WebServer.HTTP;
+
+IHttpServer server = new HttpServer();
+
+server.AddRoute("/", HomePage);
+server.AddRoute("/about", About);
+server.AddRoute("/users/login", Login);
+
+
+server.Start(8585);
+
+static HttpResponse HomePage(HttpRequest arg)
+{
+    throw new NotImplementedException();
+}
+
+static HttpResponse About(HttpRequest arg)
+{
+    throw new NotImplementedException();
+}
+
+static HttpResponse Login(HttpRequest arg)
+{
+    throw new NotImplementedException();
+}
