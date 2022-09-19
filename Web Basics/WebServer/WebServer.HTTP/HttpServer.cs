@@ -36,8 +36,36 @@ namespace WebServer.HTTP
 
         private async Task ProcessClientAsync(TcpClient tcpClient)
         {
-            tcpClient.GetStream();
+            using (NetworkStream stream = tcpClient.GetStream())
+            {
+                int position = 0;
+                byte[] buffer = new byte[4096];
+                List<byte> data = new List<byte>();
+
+                while (true)
+                {
+                    int count = await stream.ReadAsync(buffer, position, buffer.Length);
+
+                    position += count;
+
+                    if (count < buffer.Length)
+                    {
+                        var partialBuffer = new byte[count];
+                        Array.Copy(buffer, partialBuffer, count);
+
+                        data.AddRange(partialBuffer);
+                    }
+                    else
+                    {
+                        data.AddRange(buffer);
+                    }
+
+                    if (count == 0)
+                    {
+                        break;
+                    }
+                }
+            }
         }
     }
 }
- 
