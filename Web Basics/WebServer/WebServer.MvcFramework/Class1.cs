@@ -1,0 +1,7 @@
+﻿namespace WebServer.MvcFramework
+{
+    public class Class1
+    {
+
+    }
+}
