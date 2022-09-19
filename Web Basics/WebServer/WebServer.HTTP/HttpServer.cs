@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using System.Text;
 
 namespace WebServer.HTTP
 {
@@ -62,6 +63,8 @@ namespace WebServer.HTTP
                         data.AddRange(buffer);
                     }
                 }
+
+                var requestAsString = Encoding.UTF8.GetString(data.ToArray());
             }
         }
     }
