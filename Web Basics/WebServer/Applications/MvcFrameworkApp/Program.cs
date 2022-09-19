@@ -4,7 +4,7 @@ namespace MvcFrameworkApp
 {
     class Program
     {
-        static void Main()
+        static async Task Main()
         {
             IHttpServer server = new HttpServer();
 
@@ -12,8 +12,7 @@ namespace MvcFrameworkApp
             server.AddRoute("/about", About);
             server.AddRoute("/users/login", Login);
 
-
-            server.Start(8585);
+            await server.StartAsync(8585);
         }
 
         static HttpResponse HomePage(HttpRequest arg)

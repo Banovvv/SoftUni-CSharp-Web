@@ -2,7 +2,7 @@
 {
     public interface IHttpServer
     {
-        void Start(int port);
+        Task StartAsync(int port);
         void AddRoute(string path, Func<HttpRequest, HttpResponse> action);
     }
 }
