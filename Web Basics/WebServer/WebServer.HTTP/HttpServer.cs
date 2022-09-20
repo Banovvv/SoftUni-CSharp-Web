@@ -6,7 +6,6 @@ namespace WebServer.HTTP
 {
     public class HttpServer : IHttpServer
     {
-        private const int _bufferSize = 4096;
         private readonly IDictionary<string, Func<HttpRequest, HttpResponse>>
             _routeTable = new Dictionary<string, Func<HttpRequest, HttpResponse>>();
 
@@ -36,12 +35,12 @@ namespace WebServer.HTTP
             }
         }
 
-        private async Task ProcessClientAsync(TcpClient tcpClient)
+        private static async Task ProcessClientAsync(TcpClient tcpClient)
         {
             using (NetworkStream stream = tcpClient.GetStream())
             {
                 int position = 0;
-                byte[] buffer = new byte[_bufferSize];
+                byte[] buffer = new byte[HttpConstants.BufferSize];
                 List<byte> data = new List<byte>();
 
                 while (true)
