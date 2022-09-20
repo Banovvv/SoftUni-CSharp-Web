@@ -6,7 +6,8 @@ namespace WebServer.HTTP
 {
     public class HttpServer : IHttpServer
     {
-        private IDictionary<string, Func<HttpRequest, HttpResponse>>
+        private const int _bufferSize = 4096;
+        private readonly IDictionary<string, Func<HttpRequest, HttpResponse>>
             _routeTable = new Dictionary<string, Func<HttpRequest, HttpResponse>>();
 
         public void AddRoute(string path, Func<HttpRequest, HttpResponse> action)
@@ -40,7 +41,7 @@ namespace WebServer.HTTP
             using (NetworkStream stream = tcpClient.GetStream())
             {
                 int position = 0;
-                byte[] buffer = new byte[4096];
+                byte[] buffer = new byte[_bufferSize];
                 List<byte> data = new List<byte>();
 
                 while (true)
