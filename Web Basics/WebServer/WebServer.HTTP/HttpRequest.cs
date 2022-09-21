@@ -34,6 +34,11 @@ namespace WebServer.HTTP
                 {
                     if (isHeader)
                     {
+                        if (line.Contains("Cookie:"))
+                        {
+                            this.Cookies.Add(new Cookie(line));
+                        }
+
                         this.Headers.Add(new Header(line));
                     }
                     else

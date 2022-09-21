@@ -65,6 +65,8 @@ namespace WebServer.HTTP
                 }
 
                 var requestAsString = Encoding.UTF8.GetString(data.ToArray());
+
+                var request = new HttpRequest(requestAsString);
             }
         }
     }
