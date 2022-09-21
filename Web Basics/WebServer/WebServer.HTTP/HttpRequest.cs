@@ -1,4 +1,6 @@
-﻿namespace WebServer.HTTP
+﻿using System.Text;
+
+namespace WebServer.HTTP
 {
     public class HttpRequest
     {
@@ -18,6 +20,7 @@
             this.Path = headerLineParts[1];
 
             bool isHeader = true;
+            StringBuilder requestBody = new StringBuilder();
 
             for (int currentLine = 1; currentLine < lines.Length; currentLine++)
             {
@@ -35,10 +38,12 @@
                     }
                     else
                     {
-                        this.Body += line + HttpConstants.NewLine;
+                        requestBody.AppendLine(line);
                     }
                 }
             }
+
+            this.Body = requestBody.ToString();
         }
 
         public string Path { get; set; }
