@@ -49,7 +49,8 @@ namespace WebServer.HTTP
                     .First(x => x.Name == HttpConstants.RequestCookieHeader)
                     .Value;
 
-                var cookies = cookieString.Split(new string[] { "; " }, StringSplitOptions.RemoveEmptyEntries);
+                var cookies = cookieString
+                    .Split(new string[] { "; " }, StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (var cookie in cookies)
                 {
