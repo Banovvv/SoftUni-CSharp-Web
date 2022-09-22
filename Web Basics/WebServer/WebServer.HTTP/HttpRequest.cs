@@ -38,8 +38,10 @@ namespace WebServer.HTTP
                         {
                             this.Cookies.Add(new Cookie(line));
                         }
-
-                        this.Headers.Add(new Header(line));
+                        else
+                        {
+                            this.Headers.Add(new Header(line));
+                        }
                     }
                     else
                     {
