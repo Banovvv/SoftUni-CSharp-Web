@@ -43,7 +43,7 @@ namespace WebServer.HTTP
                 }
             }
 
-            if (this.Headers.Any(x=>x.Name == HttpConstants.RequestCookieHeader))
+            if (this.Headers.Any(x => x.Name == HttpConstants.RequestCookieHeader))
             {
                 var cookieString = this.Headers
                     .First(x => x.Name == HttpConstants.RequestCookieHeader)
@@ -51,7 +51,7 @@ namespace WebServer.HTTP
 
                 var cookies = cookieString.Split(new string[] { "; " }, StringSplitOptions.RemoveEmptyEntries);
 
-                foreach(var cookie in cookies)
+                foreach (var cookie in cookies)
                 {
                     this.Cookies.Add(new Cookie(cookie));
                 }
