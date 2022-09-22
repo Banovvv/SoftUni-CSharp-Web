@@ -34,19 +34,26 @@ namespace WebServer.HTTP
                 {
                     if (isHeader)
                     {
-                        if (line.Contains("Cookie:"))
-                        {
-                            this.Cookies.Add(new Cookie(line));
-                        }
-                        else
-                        {
-                            this.Headers.Add(new Header(line));
-                        }
+                        this.Headers.Add(new Header(line));
                     }
                     else
                     {
                         requestBody.AppendLine(line);
                     }
+                }
+            }
+
+            if (this.Headers.Any(x=>x.Name == HttpConstants.RequestCookieHeader))
+            {
+                var cookieString = this.Headers
+                    .First(x => x.Name == HttpConstants.RequestCookieHeader)
+                    .Value;
+
+                var cookies = cookieString.Split(new string[] { "; " }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach(var cookie in cookies)
+                {
+                    this.Cookies.Add(new Cookie(cookie));
                 }
             }
 

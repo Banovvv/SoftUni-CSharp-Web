@@ -5,7 +5,6 @@
         public Cookie(string cookieLine)
         {
             var cookieParts = cookieLine
-                .Split(new string[] { ": " }, 2, StringSplitOptions.None)[1]
                 .Split(new string[] { "=" }, 2, StringSplitOptions.None);
 
             this.Name = cookieParts[0];
