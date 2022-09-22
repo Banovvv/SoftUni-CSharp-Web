@@ -10,13 +10,13 @@ namespace WebServer.HTTP
             this.Cookies = new List<Cookie>();
 
             var lines = requestString
-                .Split(new string[] {HttpConstants.NewLine }, StringSplitOptions.None);
+                .Split(new string[] { HttpConstants.NewLine }, StringSplitOptions.None);
 
             var headerLine = lines[0];
             var headerLineParts = headerLine
                 .Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
-            this.Method = headerLineParts[0];
+            this.Method = (HttpMethod)Enum.Parse(typeof(HttpMethod), headerLineParts[0], true);
             this.Path = headerLineParts[1];
 
             bool isHeader = true;
@@ -52,9 +52,9 @@ namespace WebServer.HTTP
         }
 
         public string Path { get; set; }
-        public string Method { get; set; }
-        public List<Header> Headers { get; set; }
-        public List<Cookie> Cookies { get; set; }
+        public HttpMethod Method { get; set; }
+        public ICollection<Header> Headers { get; set; }
+        public ICollection<Cookie> Cookies { get; set; }
         public string Body { get; set; }
     }
 }

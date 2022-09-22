@@ -37,36 +37,45 @@ namespace WebServer.HTTP
 
         private static async Task ProcessClientAsync(TcpClient tcpClient)
         {
-            using (NetworkStream stream = tcpClient.GetStream())
+            try
             {
-                int position = 0;
-                byte[] buffer = new byte[HttpConstants.BufferSize];
-                List<byte> data = new List<byte>();
-
-                while (true)
+                using (NetworkStream stream = tcpClient.GetStream())
                 {
-                    int count = await stream.ReadAsync(buffer, position, buffer.Length);
+                    int position = 0;
+                    byte[] buffer = new byte[HttpConstants.BufferSize];
+                    List<byte> data = new List<byte>();
 
-                    position += count;
-
-                    if (count < buffer.Length)
+                    while (true)
                     {
-                        var partialBuffer = new byte[count];
-                        Array.Copy(buffer, partialBuffer, count);
+                        int count = await stream.ReadAsync(buffer, position, buffer.Length);
 
-                        data.AddRange(partialBuffer);
+                        position += count;
 
-                        break;
+                        if (count < buffer.Length)
+                        {
+                            var partialBuffer = new byte[count];
+                            Array.Copy(buffer, partialBuffer, count);
+
+                            data.AddRange(partialBuffer);
+
+                            break;
+                        }
+                        else
+                        {
+                            data.AddRange(buffer);
+                        }
                     }
-                    else
-                    {
-                        data.AddRange(buffer);
-                    }
+
+                    var requestAsString = Encoding.UTF8.GetString(data.ToArray());
+
+                    var request = new HttpRequest(requestAsString);
                 }
 
-                var requestAsString = Encoding.UTF8.GetString(data.ToArray());
-
-                var request = new HttpRequest(requestAsString);
+                tcpClient.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
             }
         }
     }
