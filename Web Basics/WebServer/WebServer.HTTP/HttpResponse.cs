@@ -2,15 +2,15 @@
 {
     public class HttpResponse
     {
-        public HttpResponse(HttpStatusCode statusCode, byte[] body)
+        public HttpResponse(HttpStatusCode statusCode, string contentType, byte[] body)
         {
             this.StatusCode = statusCode;
             this.Body = body;
 
             this.Headers = new List<Header>()
             {
-                new Header( "Content-Type", "TODO" ),
-                new Header( "Content-Length", "TODO" )
+                new Header( "Content-Type", contentType ),
+                new Header( "Content-Length", body.Length.ToString() )
             };
         }
 
