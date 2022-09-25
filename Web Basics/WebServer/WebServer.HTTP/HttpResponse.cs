@@ -2,7 +2,7 @@
 {
     public class HttpResponse
     {
-        public HttpResponse(HttpStatusCode statusCode, string contentType, byte[] body)
+        public HttpResponse(string contentType, byte[] body, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             this.StatusCode = statusCode;
             this.Body = body;
