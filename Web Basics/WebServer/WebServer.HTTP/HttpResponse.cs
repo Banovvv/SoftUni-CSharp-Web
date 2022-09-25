@@ -11,6 +11,7 @@ namespace WebServer.HTTP
 
             this.Headers = new List<Header>()
             {
+                new Header( "Server", "Ivan's Web Server 1.0" ),
                 new Header( "Content-Type", contentType ),
                 new Header( "Content-Length", body.Length.ToString() )
             };

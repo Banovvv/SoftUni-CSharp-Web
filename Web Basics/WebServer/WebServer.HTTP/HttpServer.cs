@@ -71,6 +71,14 @@ namespace WebServer.HTTP
                     var request = new HttpRequest(requestAsString);
                     Console.WriteLine($"{request.Method} {request.Path} {request.Headers.Count} => headers");
 
+                    var responseHtml = "<h1>Welcome</h1>";
+                    var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
+
+                    var response = new HttpResponse("text/html", responseBodyBytes);
+                    var responseHeaderBytes = Encoding.UTF8.GetBytes(response.ToString());
+
+                    await stream.WriteAsync(responseHeaderBytes, 0, responseHeaderBytes.Length);
+                    await stream.WriteAsync(response.Body, 0, response.Body.Length);
                 }
 
                 tcpClient.Close();
