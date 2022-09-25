@@ -69,9 +69,9 @@ namespace WebServer.HTTP
                     var requestAsString = Encoding.UTF8.GetString(data.ToArray());
 
                     var request = new HttpRequest(requestAsString);
-                    Console.WriteLine($"{request.Method} {request.Path} {request.Headers.Count} => headers");
 
-                    var responseHtml = "<h1>Welcome</h1>";
+                    var responseHtml = $@"<h1>Welcome</h1>
+                                         {request.Method} {request.Path} {request.Headers.Count} => headers";
                     var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
 
                     var response = new HttpResponse("text/html", responseBodyBytes);
