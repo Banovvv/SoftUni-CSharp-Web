@@ -35,14 +35,16 @@ namespace MvcFrameworkApp
             var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
 
             HttpResponse response = new HttpResponse("text/html", responseBodyBytes);
-            response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString())
-                { HttpOnly = true, MaxAge = 3 * 24 * 60 * 60 });
 
             return response;
         }
         static HttpResponse Favicon(HttpRequest request)
         {
-            throw new NotImplementedException();
+            var iconBytes = File.ReadAllBytes("wwwroot/favicon.ico");
+            
+            HttpResponse response = new HttpResponse("image/vnd.microsoft.ico", iconBytes);
+
+            return response;
         }
 
         static HttpResponse Login(HttpRequest request)
