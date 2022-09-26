@@ -6,6 +6,11 @@ namespace WebServer.HTTP
     {
         public HttpResponse(string contentType, byte[] body, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
             this.StatusCode = statusCode;
             this.Body = body;
 
@@ -27,7 +32,7 @@ namespace WebServer.HTTP
 
             sb.Append($"HTTP/1.1 {(int)this.StatusCode} {this.StatusCode}{HttpConstants.NewLine}");
 
-            foreach(var header in this.Headers)
+            foreach (var header in this.Headers)
             {
                 sb.Append(header.ToString() + HttpConstants.NewLine);
             }
