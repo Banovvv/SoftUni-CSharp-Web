@@ -20,6 +20,8 @@ namespace WebServer.HTTP
                 new Header( "Content-Type", contentType ),
                 new Header( "Content-Length", body.Length.ToString() )
             };
+
+            this.Cookies = new List<ResponseCookie>();
         }
 
         public HttpStatusCode StatusCode { get; set; }
@@ -36,6 +38,11 @@ namespace WebServer.HTTP
             foreach (var header in this.Headers)
             {
                 sb.Append(header.ToString() + HttpConstants.NewLine);
+            }
+
+            foreach (var cookie in this.Cookies)
+            {
+                sb.Append($"Set-Cookie: {cookie.ToString()}{HttpConstants.NewLine}");
             }
 
             sb.Append(HttpConstants.NewLine);

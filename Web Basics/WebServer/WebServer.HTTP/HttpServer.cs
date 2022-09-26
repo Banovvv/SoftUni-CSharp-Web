@@ -75,6 +75,8 @@ namespace WebServer.HTTP
                     var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
 
                     var response = new HttpResponse("text/html", responseBodyBytes);
+                    response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString())
+                    { HttpOnly = true, MaxAge = 3 * 24 * 60 * 60 });
                     var responseHeaderBytes = Encoding.UTF8.GetBytes(response.ToString());
 
                     await stream.WriteAsync(responseHeaderBytes, 0, responseHeaderBytes.Length);
