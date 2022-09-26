@@ -24,6 +24,7 @@ namespace WebServer.HTTP
 
         public HttpStatusCode StatusCode { get; set; }
         public ICollection<Header> Headers { get; set; }
+        public ICollection<ResponseCookie> Cookies { get; set; }
         public byte[] Body { get; set; }
 
         public override string ToString()
