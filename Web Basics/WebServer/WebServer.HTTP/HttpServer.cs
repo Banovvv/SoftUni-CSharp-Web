@@ -6,7 +6,7 @@ namespace WebServer.HTTP
 {
     public class HttpServer : IHttpServer
     {
-        private readonly IDictionary<string, Func<HttpRequest, HttpResponse>>
+        private static readonly IDictionary<string, Func<HttpRequest, HttpResponse>>
             _routeTable = new Dictionary<string, Func<HttpRequest, HttpResponse>>();
 
         public void AddRoute(string path, Func<HttpRequest, HttpResponse> action)
@@ -68,15 +68,19 @@ namespace WebServer.HTTP
 
                     var requestAsString = Encoding.UTF8.GetString(data.ToArray());
 
-                    var request = new HttpRequest(requestAsString);
+                    HttpRequest request = new HttpRequest(requestAsString);
+                    HttpResponse response;
 
-                    var responseHtml = $@"<h1>Welcome</h1>
-                                         {request.Method} {request.Path} {request.Headers.Count} => headers";
-                    var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
+                    if (_routeTable.ContainsKey(request.Path))
+                    {
+                        var action = _routeTable[request.Path];
+                        response = action(request);
+                    }
+                    else
+                    {
+                        response = new HttpResponse("text/html", new byte[0], HttpStatusCode.NotFound);
+                    }
 
-                    var response = new HttpResponse("text/html", responseBodyBytes);
-                    response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString())
-                    { HttpOnly = true, MaxAge = 3 * 24 * 60 * 60 });
                     var responseHeaderBytes = Encoding.UTF8.GetBytes(response.ToString());
 
                     await stream.WriteAsync(responseHeaderBytes, 0, responseHeaderBytes.Length);
