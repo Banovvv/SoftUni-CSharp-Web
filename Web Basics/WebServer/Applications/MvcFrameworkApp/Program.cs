@@ -38,15 +38,6 @@ namespace MvcFrameworkApp
 
             return response;
         }
-        static HttpResponse Favicon(HttpRequest request)
-        {
-            var iconBytes = File.ReadAllBytes("wwwroot/favicon.ico");
-            
-            HttpResponse response = new HttpResponse("image/vnd.microsoft.ico", iconBytes);
-
-            return response;
-        }
-
         static HttpResponse Login(HttpRequest request)
         {
             throw new NotImplementedException();

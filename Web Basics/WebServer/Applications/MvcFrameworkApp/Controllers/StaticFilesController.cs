@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using WebServer.HTTP;
+using WebServer.MvcFramework;
 
 namespace MvcFrameworkApp.Controllers
 {
-    internal class StaticFilesController
+    public class StaticFilesController : Controller
     {
+        public HttpResponse Favicon(HttpRequest request)
+        {
+            var iconBytes = File.ReadAllBytes("wwwroot/favicon.ico");
+
+            HttpResponse response = new HttpResponse("image/vnd.microsoft.ico", iconBytes);
+
+            return response;
+        }
     }
 }
