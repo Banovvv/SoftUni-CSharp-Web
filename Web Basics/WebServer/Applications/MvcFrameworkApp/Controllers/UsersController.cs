@@ -15,5 +15,14 @@ namespace MvcFrameworkApp.Controllers
 
             return response;
         }
+        public HttpResponse Register(HttpRequest request)
+        {
+            var responseHtml = "<h1>Register</h1>";
+            var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
+
+            HttpResponse response = new HttpResponse("text/html", responseBodyBytes);
+
+            return response;
+        }
     }
 }
