@@ -16,9 +16,5 @@ namespace MvcFrameworkApp
 
             await server.StartAsync(8585);
         }        
-        static HttpResponse Login(HttpRequest request)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
