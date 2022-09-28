@@ -8,14 +8,7 @@ namespace MvcFrameworkApp.Controllers
     {
         public HttpResponse Index(HttpRequest request)
         {
-            var responseHtml = "<h1>Welcome</h1>";
-            var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
-
-            HttpResponse response = new HttpResponse("text/html", responseBodyBytes);
-            response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString())
-            { HttpOnly = true, MaxAge = 3 * 24 * 60 * 60 });
-
-            return response;
+            return this.View("Views/Home/Index.html");
         }
         public HttpResponse About(HttpRequest request)
         {
