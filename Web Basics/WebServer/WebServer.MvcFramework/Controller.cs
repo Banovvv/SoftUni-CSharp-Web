@@ -7,7 +7,8 @@ namespace WebServer.MvcFramework
     {
         public HttpResponse View(string viewPath)
         {
-            var responseHtml = System.IO.File.ReadAllText(viewPath);
+            var responseHtml = System.IO.File.ReadAllText
+                ($"Views/{this.GetType().Name.Replace("Controller", string.Empty)}/{viewPath}.html");
             var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
 
             HttpResponse response = new HttpResponse("text/html", responseBodyBytes);
