@@ -7,11 +7,7 @@ namespace MvcFrameworkApp.Controllers
     {
         public HttpResponse Favicon(HttpRequest request)
         {
-            var iconBytes = File.ReadAllBytes("wwwroot/favicon.ico");
-
-            HttpResponse response = new HttpResponse("image/vnd.microsoft.ico", iconBytes);
-
-            return response;
+            return this.File("wwwroot/favicon.ico", "image/vnd.microsoft.ico");
         }
     }
 }

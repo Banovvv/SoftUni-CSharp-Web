@@ -7,10 +7,19 @@ namespace WebServer.MvcFramework
     {
         public HttpResponse View(string viewPath)
         {
-            var responseHtml = File.ReadAllText(viewPath);
+            var responseHtml = System.IO.File.ReadAllText(viewPath);
             var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
 
             HttpResponse response = new HttpResponse("text/html", responseBodyBytes);
+
+            return response;
+        }
+
+        public HttpResponse File(string filePath, string fileType)
+        {
+            var iconBytes = System.IO.File.ReadAllBytes(filePath);
+
+            HttpResponse response = new HttpResponse(fileType, iconBytes);
 
             return response;
         }
