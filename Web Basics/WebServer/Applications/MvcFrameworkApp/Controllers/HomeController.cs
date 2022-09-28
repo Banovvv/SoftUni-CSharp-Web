@@ -8,7 +8,7 @@ namespace MvcFrameworkApp.Controllers
     {
         public HttpResponse Index(HttpRequest request)
         {
-            return this.View(nameof(Index));
+            return this.View();
         }
     }
 }

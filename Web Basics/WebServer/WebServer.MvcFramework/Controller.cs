@@ -1,11 +1,12 @@
-﻿using System.Text;
+﻿using System.Runtime.CompilerServices;
+using System.Text;
 using WebServer.HTTP;
 
 namespace WebServer.MvcFramework
 {
     public abstract class Controller
     {
-        public HttpResponse View(string viewPath)
+        public HttpResponse View([CallerMemberName]string viewPath = "")
         {
             var responseHtml = System.IO.File.ReadAllText
                 ($"Views/{this.GetType().Name.Replace("Controller", string.Empty)}/{viewPath}.html");
