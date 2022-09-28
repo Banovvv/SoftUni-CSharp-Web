@@ -10,14 +10,5 @@ namespace MvcFrameworkApp.Controllers
         {
             return this.View("Views/Home/Index.html");
         }
-        public HttpResponse About(HttpRequest request)
-        {
-            var responseHtml = "<h1>About</h1>";
-            var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
-
-            HttpResponse response = new HttpResponse("text/html", responseBodyBytes);
-
-            return response;
-        }
     }
 }
