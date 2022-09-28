@@ -50,7 +50,14 @@ namespace HTTPProtocolDemo.Scrapers
                     var style = relevantInfo[2].InnerText;
                     var imagePath = beerInfo.Descendants("img").First().Attributes.First(x => x.Name == "src").Value;
 
-                    beers.Add(new Beer(name, volume, avb, price, style, imagePath));
+                    byte[] image;
+
+                    using (var response = await client.GetAsync(url))
+                    {
+                        image = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    }
+
+                    beers.Add(new Beer(name, volume, avb, price, style, image));
                 }
             }
 
