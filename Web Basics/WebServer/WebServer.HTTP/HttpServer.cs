@@ -6,19 +6,11 @@ namespace WebServer.HTTP
 {
     public class HttpServer : IHttpServer
     {
-        private static readonly IDictionary<string, Func<HttpRequest, HttpResponse>>
-            _routeTable = new Dictionary<string, Func<HttpRequest, HttpResponse>>();
+        private readonly List<Route> routeTable;
 
-        public void AddRoute(string path, Func<HttpRequest, HttpResponse> action)
+        public HttpServer(List<Route> routeTable)
         {
-            if (_routeTable.ContainsKey(path))
-            {
-                _routeTable[path] = action;
-            }
-            else
-            {
-                _routeTable.Add(path, action);
-            }
+            this.routeTable = routeTable;
         }
 
         public async Task StartAsync(int port)
@@ -35,7 +27,7 @@ namespace WebServer.HTTP
             }
         }
 
-        private static async Task ProcessClientAsync(TcpClient tcpClient)
+        private async Task ProcessClientAsync(TcpClient tcpClient)
         {
             try
             {
@@ -71,13 +63,17 @@ namespace WebServer.HTTP
                     HttpRequest request = new HttpRequest(requestAsString);
                     HttpResponse response;
 
-                    if (_routeTable.ContainsKey(request.Path))
+                    var route = routeTable
+                        .FirstOrDefault(x => x.Path == request.Path);
+
+                    if (route != null)
                     {
-                        var action = _routeTable[request.Path];
+                        var action = route.Action;
                         response = action(request);
                     }
                     else
                     {
+                        // TODO: 404
                         response = new HttpResponse("text/html", new byte[0], HttpStatusCode.NotFound);
                     }
 

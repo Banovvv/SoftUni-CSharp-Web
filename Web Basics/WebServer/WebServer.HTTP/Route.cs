@@ -1,6 +1,6 @@
 ﻿using WebServer.HTTP;
 
-namespace WebServer.MvcFramework
+namespace WebServer.HTTP
 {
     public class Route
     {
