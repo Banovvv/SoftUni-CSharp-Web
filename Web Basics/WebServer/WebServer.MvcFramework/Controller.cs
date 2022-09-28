@@ -8,8 +8,13 @@ namespace WebServer.MvcFramework
     {
         public HttpResponse View([CallerMemberName]string viewPath = "")
         {
-            var responseHtml = System.IO.File.ReadAllText
+            var layout = System.IO.File.ReadAllText
+                ($"Views/Shared/_Layout.html");
+            var pageHtml = System.IO.File.ReadAllText
                 ($"Views/{this.GetType().Name.Replace("Controller", string.Empty)}/{viewPath}.html");
+
+            var responseHtml = layout.Replace("@RenderBody()", pageHtml);
+
             var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
 
             HttpResponse response = new HttpResponse("text/html", responseBodyBytes);
