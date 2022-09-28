@@ -1,5 +1,5 @@
 ﻿using MvcFrameworkApp.Controllers;
-using WebServer.HTTP;
+using WebServer.MvcFramework;
 
 namespace MvcFrameworkApp
 {
@@ -7,17 +7,17 @@ namespace MvcFrameworkApp
     {
         static async Task Main()
         {
-            IHttpServer server = new HttpServer();
+            List<Route> routeTable = new List<Route>();
 
-            server.AddRoute("/", new HomeController().Index);
-            server.AddRoute("/favicon.ico", new StaticFilesController().Favicon);
-            server.AddRoute("/users/login", new UsersController().Login);
-            server.AddRoute("/users/register", new UsersController().Register);
-            server.AddRoute("/cards/add", new CardsController().Add);
-            server.AddRoute("/cards/all", new CardsController().All);
-            server.AddRoute("/cards/collection", new CardsController().Collection);
+            routeTable.Add(new Route("/", new HomeController().Index));
+            routeTable.Add(new Route("/favicon.ico", new StaticFilesController().Favicon));
+            routeTable.Add(new Route("/users/login", new UsersController().Login));
+            routeTable.Add(new Route("/users/register", new UsersController().Register));
+            routeTable.Add(new Route("/cards/add", new CardsController().Add));
+            routeTable.Add(new Route("/cards/all", new CardsController().All));
+            routeTable.Add(new Route("/cards/collection", new CardsController().Collection));
 
-            await server.StartAsync(8585);
+            await Host.CreateHostAsync(routeTable, 8585);
         }
     }
 }
