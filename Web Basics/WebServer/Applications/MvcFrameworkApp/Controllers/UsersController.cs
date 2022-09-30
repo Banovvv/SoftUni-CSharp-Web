@@ -13,5 +13,14 @@ namespace MvcFrameworkApp.Controllers
         {
             return this.View();
         }
+
+        public HttpResponse DoLogin(HttpRequest request)
+        {
+            // TODO: read data
+            // TODO: check user
+            // TODO: log user in
+
+            return this.Redirect("/");
+        }
     }
 }

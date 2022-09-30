@@ -1,9 +1,18 @@
-﻿using System.Text;
+﻿using System.Net.Mime;
+using System.Text;
 
 namespace WebServer.HTTP
 {
     public class HttpResponse
     {
+        public HttpResponse(HttpStatusCode statusCode)
+        {
+            this.Body = new byte[0];
+            this.StatusCode = statusCode;
+            this.Headers = new List<Header>();
+            this.Cookies = new List<ResponseCookie>();
+        }
+
         public HttpResponse(string contentType, byte[] body, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             if (body == null)

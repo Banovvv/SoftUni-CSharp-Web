@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using Microsoft.VisualBasic.FileIO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using WebServer.HTTP;
 
@@ -27,6 +28,14 @@ namespace WebServer.MvcFramework
             var iconBytes = System.IO.File.ReadAllBytes(filePath);
 
             HttpResponse response = new HttpResponse(fileType, iconBytes);
+
+            return response;
+        }
+
+        public HttpResponse Redirect(string url)
+        {
+            HttpResponse response = new HttpResponse(HttpStatusCode.Found);
+            response.Headers.Add(new Header("Location", url));
 
             return response;
         }
