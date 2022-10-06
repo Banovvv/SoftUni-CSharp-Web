@@ -1,6 +1,6 @@
 ﻿namespace WebServer.MvcFramework.ViewEngine
 {
-    public class ViewEngine : IViewEngine
+    public class WebServerViewEngine : IViewEngine
     {
         public string GetHtml(string templateCode, object viewModel)
         {

@@ -21,4 +21,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WebServer.MvcFramework\WebServer.MvcFramework.csproj" />
+  </ItemGroup>
+
 </Project>
