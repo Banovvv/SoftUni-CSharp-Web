@@ -10,8 +10,8 @@ namespace WebServer.MvcFramework.Tests
         {
             var viewModel = new TestViewModel()
             {
-                Name = "",
-                Price = 123.45M,
+                Name = "Doggo",
+                Price = 12345.67M,
                 BirthDate = new DateTime(2018, 6, 18)
             };
 
