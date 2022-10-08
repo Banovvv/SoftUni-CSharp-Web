@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using System.Text;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace WebServer.MvcFramework.ViewEngine
 {
@@ -67,6 +67,7 @@ namespace WebServer.MvcFramework.ViewEngine
             StringReader sr = new StringReader(templateCode);
 
             string line;
+
             while ((line = sr.ReadLine()) != null)
             {
                 if (supportedOperators.Any(x => line.TrimStart().StartsWith("@" + x)))
