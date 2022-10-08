@@ -1,3 +1,4 @@
+using WebServer.MvcFramework.Tests.Models;
 using WebServer.MvcFramework.ViewEngine;
 
 namespace WebServer.MvcFramework.Tests
@@ -6,6 +7,9 @@ namespace WebServer.MvcFramework.Tests
     {
         [Theory]
         [InlineData("CleanHtml")]
+        [InlineData("Foreach")]
+        [InlineData("IfElseFor")]
+        [InlineData("ViewModel")]
         public void TestGetHtml(string fileName)
         {
             var viewModel = new TestViewModel()
@@ -22,13 +26,6 @@ namespace WebServer.MvcFramework.Tests
             var expectedResult = File.ReadAllText($"ViewTests/{fileName}.Result.html");
 
             Assert.Equal(expectedResult, result);
-        }
-
-        public class TestViewModel
-        {
-            public string Name { get; set; }
-            public decimal Price { get; set; }
-            public DateTime BirthDate { get; set; }
         }
     }
 }
