@@ -9,9 +9,13 @@ namespace WebServer.MvcFramework.ViewEngine
 {
     public class WebServerViewEngine : IViewEngine
     {
-        public string GetHtml(string templateCode, object viewModel)
+        public string GetHtml(string templateCode, object viewModel, string user)
         {
-            throw new NotImplementedException();
+            string csharpCode = GenerateCSharpFromTemplate(templateCode, viewModel);
+            IView executableObject = GenerateExecutableCоde(csharpCode, viewModel);
+            string html = executableObject.ExecuteTemplate(viewModel, user);
+
+            return html;
         }
 
         private string GenerateCSharpFromTemplate(string templateCode, object viewModel)
