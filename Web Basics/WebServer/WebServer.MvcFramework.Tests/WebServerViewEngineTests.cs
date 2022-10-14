@@ -16,7 +16,7 @@ namespace WebServer.MvcFramework.Tests
             {
                 Name = "Doggo",
                 Price = 12345.67M,
-                BirthDate = new DateTime(2018, 6, 18)
+                DateOfBirth = new DateTime(2018, 6, 18)
             };
 
             IViewEngine viewEngine = new WebServerViewEngine();

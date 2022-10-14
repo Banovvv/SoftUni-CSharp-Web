@@ -4,6 +4,6 @@
     {
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }
