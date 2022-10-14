@@ -41,25 +41,25 @@ namespace WebServer.MvcFramework.ViewEngine
             }
 
             string csharpCode = @"
-                using System;
-                using System.Text;
-                using System.Linq;
-                using System.Collections.Generic;
-                using SUS.MvcFramework.ViewEngine;
-                namespace ViewNamespace
-                {
-                    public class ViewClass : IView
-                    {
-                        public string ExecuteTemplate(object viewModel, string user)
-                        {
-                            var User = user;
-                            var Model = viewModel as " + typeOfModel + @";
-                            var html = new StringBuilder();
-                            " + GetMethodBody(templateCode) + @"
-                            return html.ToString();
-                        }
-                    }
-                }";
+using System;
+using System.Text;
+using System.Linq;
+using System.Collections.Generic;
+using WebServer.MvcFramework.ViewEngine;
+namespace ViewNamespace
+{
+    public class ViewClass : IView
+    {
+        public string ExecuteTemplate(object viewModel, string user)
+        {
+            var User = user;
+            var Model = viewModel as " + typeOfModel + @";
+            var html = new StringBuilder();
+            " + GetMethodBody(templateCode) + @"
+            return html.ToString();
+        }
+    }
+}";
 
             return csharpCode;
         }
