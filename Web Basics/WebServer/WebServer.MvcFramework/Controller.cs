@@ -20,7 +20,7 @@ namespace WebServer.MvcFramework
             layout = layout.Replace("@RenderBody()", "___VIEW___");
             layout = this.viewEngine.GetHtml(layout, viewModel, "");
 
-            var viewContent = System.IO.File.ReadAllText($"Views/{this.GetType().Name.Replace("Controller", string.Empty)}/{viewPath}.html");
+            var viewContent = System.IO.File.ReadAllText($"Views/{this.GetType().Name.Replace("Controller", string.Empty)}/{viewPath}.cshtml");
             viewContent = this.viewEngine.GetHtml(viewContent, viewModel, "");
 
             var responseHtml = layout.Replace("___VIEW___", viewContent);
