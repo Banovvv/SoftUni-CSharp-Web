@@ -16,7 +16,7 @@ namespace WebServer.MvcFramework
 
         public HttpResponse View(object viewModel = null, [CallerMemberName]string viewPath = "")
         {
-            var layout = System.IO.File.ReadAllText($"Views/Shared/_Layout.html");
+            var layout = System.IO.File.ReadAllText($"Views/Shared/_Layout.cshtml");
             layout = layout.Replace("@RenderBody()", "___VIEW___");
             layout = this.viewEngine.GetHtml(layout, viewModel, "");
 
