@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MvcFrameworkApp.ViewModels
+﻿namespace MvcFrameworkApp.ViewModels
 {
-    internal class IndexViewModel
+    public class IndexViewModel
     {
+        public IndexViewModel()
+        {
+        }
+
+        public IndexViewModel(int currentYear, string message)
+        {
+            this.CurrentYear = currentYear;
+            this.Message = message;
+        }
+
+        public int CurrentYear { get; set; }
+        public string Message { get; set; }
     }
 }
