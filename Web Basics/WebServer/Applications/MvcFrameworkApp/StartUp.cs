@@ -1,7 +1,7 @@
 ﻿using WebServer.HTTP;
 using WebServer.MvcFramework;
 
-namespace MvcFrameworkApp
+namespace BattleCards
 {
     public class StartUp : IMvcApplication
     {

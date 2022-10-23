@@ -2,7 +2,7 @@
 using WebServer.MvcFramework;
 using WebServer.MvcFramework.Attributes;
 
-namespace MvcFrameworkApp.Controllers
+namespace BattleCards.Controllers
 {
     public class CardsController : Controller
     {

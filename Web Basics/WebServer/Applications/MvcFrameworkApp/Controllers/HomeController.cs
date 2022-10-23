@@ -1,9 +1,9 @@
-﻿using MvcFrameworkApp.ViewModels;
+﻿using BattleCards.ViewModels;
 using WebServer.HTTP;
 using WebServer.MvcFramework;
 using WebServer.MvcFramework.Attributes;
 
-namespace MvcFrameworkApp.Controllers
+namespace BattleCards.Controllers
 {
     public class HomeController : Controller
     {
