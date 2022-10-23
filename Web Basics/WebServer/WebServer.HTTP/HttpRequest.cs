@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net;
+using System.Text;
 
 namespace WebServer.HTTP
 {
@@ -66,9 +67,14 @@ namespace WebServer.HTTP
 
             foreach (var parameter in parameters)
             {
+                if (string.IsNullOrEmpty(parameter))
+                {
+                    break;
+                }
+
                 var parameterParts = parameter.Split('=');
                 var name = parameterParts[0];
-                var value = parameterParts[1];
+                var value = WebUtility.UrlDecode(parameterParts[1]);
 
                 if (!this.FormData.ContainsKey(name))
                 {

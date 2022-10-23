@@ -1,5 +1,6 @@
 ﻿using WebServer.HTTP;
 using WebServer.MvcFramework;
+using WebServer.MvcFramework.Attributes;
 
 namespace MvcFrameworkApp.Controllers
 {
@@ -7,6 +8,14 @@ namespace MvcFrameworkApp.Controllers
     {
         public HttpResponse Add()
         {
+            return this.View();
+        }
+
+        [HttpPost("/Cards/Add")]
+        public HttpResponse DoAdd()
+        {
+            var requst = this.Request;
+
             return this.View();
         }
 
