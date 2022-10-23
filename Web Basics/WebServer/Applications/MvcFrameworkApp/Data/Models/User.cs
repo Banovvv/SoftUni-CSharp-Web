@@ -1,16 +1,22 @@
-﻿namespace BattleCards.Data.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BattleCards.Data.Models
 {
     public class User
     {
         public User()
         {
             this.Id = Guid.NewGuid().ToString();
-            Cards = new HashSet<UserCard>();
+            this.Cards = new HashSet<UserCard>();
         }
 
         public string Id { get; set; }
-        public string Name { get; set; }
+        [Required]
+        [MaxLength(20)]
+        public string Username { get; set; }
+        [Required]
         public string Email { get; set; }
+        [Required]
         public string Password { get; set; }
 
         public virtual ICollection<UserCard> Cards { get; set; }
