@@ -9,9 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Application
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServer.MvcFramework", "WebServer.MvcFramework\WebServer.MvcFramework.csproj", "{81D5E171-2033-453A-9223-82772DB66CEB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcFrameworkApp", "Applications\MvcFrameworkApp\MvcFrameworkApp.csproj", "{74F5C17C-1490-4273-9053-DBCC3A9A9708}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleCards", "Applications\MvcFrameworkApp\BattleCards.csproj", "{74F5C17C-1490-4273-9053-DBCC3A9A9708}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServer.MvcFramework.Tests", "WebServer.MvcFramework.Tests\WebServer.MvcFramework.Tests.csproj", "{CADBEF62-AC6E-4481-8A8E-1CE60F88B254}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServer.MvcFramework.Tests", "WebServer.MvcFramework.Tests\WebServer.MvcFramework.Tests.csproj", "{CADBEF62-AC6E-4481-8A8E-1CE60F88B254}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
