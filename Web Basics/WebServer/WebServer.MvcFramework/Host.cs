@@ -10,7 +10,7 @@ namespace WebServer.MvcFramework
             List<Route> routeTable = new List<Route>();
 
             RegisterStaticFiles(routeTable);
-            RegisterControllerRoutes(routeTable);
+            RegisterControllerRoutes(routeTable, application);
 
             application.ConfigureServices();
             application.Configure(routeTable);
@@ -20,9 +20,15 @@ namespace WebServer.MvcFramework
             await server.StartAsync(port);
         }
 
-        private static void RegisterControllerRoutes(List<Route> routeTable)
+        private static void RegisterControllerRoutes(List<Route> routeTable, IMvcApplication application)
         {
-            throw new NotImplementedException();
+            var controllerTypes = application.GetType().Assembly.GetTypes()
+                .Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(Controller)));
+
+            foreach (var controllerType in controllerTypes)
+            {
+
+            }
         }
 
         private static void RegisterStaticFiles(List<Route> routeTable)
