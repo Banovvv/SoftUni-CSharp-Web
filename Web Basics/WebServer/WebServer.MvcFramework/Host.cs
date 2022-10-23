@@ -12,7 +12,14 @@ namespace WebServer.MvcFramework
 
             foreach (var staticFile in staticFiles)
             {
+                string url = staticFile
+                    .Replace("wwwroot", string.Empty)
+                    .Replace("\\", "/");
 
+                routeTable.Add(new Route(url, HTTP.HttpMethod.Get, (request) =>
+                {
+                    return null;
+                }));
             }
 
             application.ConfigureServices();
