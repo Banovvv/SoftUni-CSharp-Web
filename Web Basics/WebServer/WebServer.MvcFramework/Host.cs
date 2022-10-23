@@ -1,4 +1,5 @@
 ﻿using WebServer.HTTP;
+using WebServer.MvcFramework.Attributes;
 using HttpMethod = WebServer.HTTP.HttpMethod;
 
 namespace WebServer.MvcFramework
@@ -27,7 +28,38 @@ namespace WebServer.MvcFramework
 
             foreach (var controllerType in controllerTypes)
             {
+                var methods = controllerType.GetMethods()
+                    .Where(x => x.IsPublic && !x.IsStatic && !x.IsAbstract && !x.IsConstructor
+                            && !x.IsSpecialName && x.DeclaringType == controllerType);
 
+                foreach (var method in methods)
+                {
+                    string url = $"/{controllerType.Name.Replace("Controller", string.Empty)}/{method.Name}";
+
+                    var attribute = method.GetCustomAttributes(false)
+                        .Where(x => x.GetType().IsSubclassOf(typeof(BaseHttpAttribute)))
+                        .FirstOrDefault() as BaseHttpAttribute;
+
+                    var httpMethod = HttpMethod.Get;
+
+                    if (attribute != null)
+                    {
+                        httpMethod = attribute.Method;
+                    }
+
+                    if (!string.IsNullOrEmpty(attribute?.Url))
+                    {
+                        url = attribute.Url;
+                    }
+
+                    routeTable.Add(new Route(url, httpMethod, (request) =>
+                    {
+                        var instance = Activator.CreateInstance(controllerType);
+                        var response = method.Invoke(instance, new[] { request }) as HttpResponse;
+
+                        return response;
+                    }));
+                }
             }
         }
 
