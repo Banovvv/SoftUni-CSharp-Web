@@ -4,6 +4,7 @@
     {
         public User()
         {
+            this.Id = Guid.NewGuid().ToString();
             Cards = new HashSet<UserCard>();
         }
 
