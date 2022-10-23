@@ -10,6 +10,7 @@ namespace WebServer.MvcFramework
             List<Route> routeTable = new List<Route>();
 
             RegisterStaticFiles(routeTable);
+            RegisterControllerRoutes(routeTable);
 
             application.ConfigureServices();
             application.Configure(routeTable);
@@ -17,6 +18,11 @@ namespace WebServer.MvcFramework
             IHttpServer server = new HttpServer(routeTable);
 
             await server.StartAsync(port);
+        }
+
+        private static void RegisterControllerRoutes(List<Route> routeTable)
+        {
+            throw new NotImplementedException();
         }
 
         private static void RegisterStaticFiles(List<Route> routeTable)

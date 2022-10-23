@@ -1,5 +1,6 @@
 ﻿using WebServer.HTTP;
 using WebServer.MvcFramework;
+using WebServer.MvcFramework.Attributes;
 
 namespace MvcFrameworkApp.Controllers
 {
@@ -14,6 +15,7 @@ namespace MvcFrameworkApp.Controllers
             return this.View();
         }
 
+        [HttpPost]
         public HttpResponse DoLogin(HttpRequest request)
         {
             // TODO: read data
