@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Text;
 using WebServer.HTTP;
 using WebServer.MvcFramework.ViewEngine;
@@ -15,7 +14,9 @@ namespace WebServer.MvcFramework
             this.viewEngine = new WebServerViewEngine();
         }
 
-        public HttpResponse View(object viewModel = null, [CallerMemberName]string viewPath = "")
+        public HttpRequest Request { get; set; }
+
+        public HttpResponse View(object viewModel = null, [CallerMemberName] string viewPath = "")
         {
             var layout = System.IO.File.ReadAllText($"Views/Shared/_Layout.cshtml");
             layout = layout.Replace("@RenderBody()", "___VIEW___");
