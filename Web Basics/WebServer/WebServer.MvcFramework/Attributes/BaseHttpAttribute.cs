@@ -4,7 +4,7 @@ namespace WebServer.MvcFramework.Attributes
 {
     public abstract class BaseHttpAttribute
     {
-        public string Url { get; }
+        public string Url { get; set; }
         public abstract HttpMethod Method { get; }
     }
 }
