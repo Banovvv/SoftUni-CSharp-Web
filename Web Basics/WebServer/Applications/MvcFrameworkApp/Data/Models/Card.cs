@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BattleCards.Data.Models
 {
-    internal class Card
+    public class Card
     {
     }
 }
