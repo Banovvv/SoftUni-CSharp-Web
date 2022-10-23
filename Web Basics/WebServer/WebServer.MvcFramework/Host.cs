@@ -1,4 +1,5 @@
 ﻿using WebServer.HTTP;
+using HttpMethod = WebServer.HTTP.HttpMethod;
 
 namespace WebServer.MvcFramework
 {
@@ -16,9 +17,27 @@ namespace WebServer.MvcFramework
                     .Replace("wwwroot", string.Empty)
                     .Replace("\\", "/");
 
-                routeTable.Add(new Route(url, HTTP.HttpMethod.Get, (request) =>
+                routeTable.Add(new Route(url, HttpMethod.Get, (request) =>
                 {
-                    return null;
+                    var fileContent = File.ReadAllBytes(staticFile);
+                    var fileExtension = new FileInfo(staticFile).Extension;
+                    var contentType = string.Empty;
+
+                    switch (fileExtension)
+                    {
+                        case ".txt": contentType = "text/plain"; break;
+                        case ".js": contentType = "text/javascript"; break;
+                        case ".css": contentType = "text/css"; break;
+                        case ".jpg": contentType = "image/jpeg"; break;
+                        case ".jpeg": contentType = "image/jpeg"; break;
+                        case ".png": contentType = "text/plain"; break;
+                        case ".gif": contentType = "image/gif"; break;
+                        case ".ico": contentType = "image/vnd.microsoft.icon"; break;
+                        case ".html": contentType = "text/html"; break;
+                        default: contentType = "text/plain"; break;
+                    }
+
+                    return new HttpResponse(contentType, fileContent, HttpStatusCode.OK);
                 }));
             }
 
