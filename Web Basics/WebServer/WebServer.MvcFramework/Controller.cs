@@ -2,19 +2,29 @@
 using System.Runtime.CompilerServices;
 using System.Text;
 using WebServer.HTTP;
+using WebServer.MvcFramework.ViewEngine;
 
 namespace WebServer.MvcFramework
 {
     public abstract class Controller
     {
-        public HttpResponse View([CallerMemberName]string viewPath = "")
-        {
-            var layout = System.IO.File.ReadAllText
-                ($"Views/Shared/_Layout.html");
-            var pageHtml = System.IO.File.ReadAllText
-                ($"Views/{this.GetType().Name.Replace("Controller", string.Empty)}/{viewPath}.html");
+        private readonly WebServerViewEngine viewEngine;
 
-            var responseHtml = layout.Replace("@RenderBody()", pageHtml);
+        public Controller()
+        {
+            this.viewEngine = new WebServerViewEngine();
+        }
+
+        public HttpResponse View(object viewModel = null, [CallerMemberName]string viewPath = "")
+        {
+            var layout = System.IO.File.ReadAllText($"Views/Shared/_Layout.cshtml");
+            layout = layout.Replace("@RenderBody()", "___VIEW___");
+            layout = this.viewEngine.GetHtml(layout, viewModel, "");
+
+            var viewContent = System.IO.File.ReadAllText($"Views/{this.GetType().Name.Replace("Controller", string.Empty)}/{viewPath}.cshtml");
+            viewContent = this.viewEngine.GetHtml(viewContent, viewModel, "");
+
+            var responseHtml = layout.Replace("___VIEW___", viewContent);
 
             var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
 

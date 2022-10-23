@@ -8,6 +8,13 @@ namespace WebServer.MvcFramework
         {
             List<Route> routeTable = new List<Route>();
 
+            var staticFiles = Directory.GetFiles("wwwroot", "*", SearchOption.AllDirectories);
+
+            foreach (var staticFile in staticFiles)
+            {
+
+            }
+
             application.ConfigureServices();
             application.Configure(routeTable);
 
