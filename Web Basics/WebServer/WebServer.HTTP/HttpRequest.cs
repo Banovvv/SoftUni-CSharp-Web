@@ -59,12 +59,29 @@ namespace WebServer.HTTP
             }
 
             this.Body = requestBody.ToString();
+
+            this.FormData = new Dictionary<string, string>();
+
+            var parameters = this.Body.Split("&");
+
+            foreach (var parameter in parameters)
+            {
+                var parameterParts = parameter.Split('=');
+                var name = parameterParts[0];
+                var value = parameterParts[1];
+
+                if (!this.FormData.ContainsKey(name))
+                {
+                    this.FormData.Add(name, value);
+                }
+            }
         }
 
         public string Path { get; set; }
         public HttpMethod Method { get; set; }
         public ICollection<Header> Headers { get; set; }
         public ICollection<Cookie> Cookies { get; set; }
+        public IDictionary<string, string> FormData { get; set; }
         public string Body { get; set; }
     }
 }
