@@ -63,7 +63,7 @@ namespace WebServer.HTTP
 
             this.FormData = new Dictionary<string, string>();
 
-            var parameters = this.Body.Split("&");
+            var parameters = this.Body.Split(new string[] { "&" }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var parameter in parameters)
             {
