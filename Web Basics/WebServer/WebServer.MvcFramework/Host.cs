@@ -9,6 +9,18 @@ namespace WebServer.MvcFramework
         {
             List<Route> routeTable = new List<Route>();
 
+            RegisterStaticFiles(routeTable);
+
+            application.ConfigureServices();
+            application.Configure(routeTable);
+
+            IHttpServer server = new HttpServer(routeTable);
+
+            await server.StartAsync(port);
+        }
+
+        private static void RegisterStaticFiles(List<Route> routeTable)
+        {
             var staticFiles = Directory.GetFiles("wwwroot", "*", SearchOption.AllDirectories);
 
             foreach (var staticFile in staticFiles)
@@ -40,13 +52,6 @@ namespace WebServer.MvcFramework
                     return new HttpResponse(contentType, fileContent, HttpStatusCode.OK);
                 }));
             }
-
-            application.ConfigureServices();
-            application.Configure(routeTable);
-
-            IHttpServer server = new HttpServer(routeTable);
-
-            await server.StartAsync(port);
         }
     }
 }
