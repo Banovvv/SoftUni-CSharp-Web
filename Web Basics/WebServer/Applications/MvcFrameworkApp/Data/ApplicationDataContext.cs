@@ -29,7 +29,8 @@ namespace BattleCards.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.Entity<UserCard>()
+                .HasKey(x => new { x.UserId, x.Card });
         }
     }
 }

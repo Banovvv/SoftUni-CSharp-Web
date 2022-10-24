@@ -9,6 +9,7 @@ namespace BattleCards.Data.Models
             this.Users = new HashSet<UserCard>();
         }
 
+        [Key]
         public int Id { get; set; }
         [Required]
         [MaxLength(15)]
@@ -17,7 +18,9 @@ namespace BattleCards.Data.Models
         public string ImageUrl { get; set; }
         [Required]
         public string Keyword { get; set; }
+        [Required]
         public int Attack { get; set; }
+        [Required]
         public int Health { get; set; }
         [Required]
         [MaxLength(200)]
