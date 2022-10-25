@@ -18,14 +18,10 @@ namespace WebServer.MvcFramework
 
         public HttpResponse View(object viewModel = null, [CallerMemberName] string viewPath = "")
         {
-            var layout = System.IO.File.ReadAllText($"Views/Shared/_Layout.cshtml");
-            layout = layout.Replace("@RenderBody()", "___VIEW___");
-            layout = this.viewEngine.GetHtml(layout, viewModel, "");
+            var viewContent = System.IO.File
+                .ReadAllText($"Views/{this.GetType().Name.Replace("Controller", string.Empty)}/{viewPath}.cshtml");
 
-            var viewContent = System.IO.File.ReadAllText($"Views/{this.GetType().Name.Replace("Controller", string.Empty)}/{viewPath}.cshtml");
-            viewContent = this.viewEngine.GetHtml(viewContent, viewModel, "");
-
-            var responseHtml = layout.Replace("___VIEW___", viewContent);
+            var responseHtml = InsertViewInLayout(viewContent, viewModel);
 
             var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
 
@@ -49,6 +45,22 @@ namespace WebServer.MvcFramework
             response.Headers.Add(new Header("Location", url));
 
             return response;
+        }
+
+        public HttpResponse Error(string errorMessage)
+        {
+
+        }
+
+        private string InsertViewInLayout(string viewContent, object viewModel)
+        {
+            var layout = System.IO.File.ReadAllText($"Views/Shared/_Layout.cshtml");
+            layout = layout.Replace("@RenderBody()", "___VIEW___");
+            layout = this.viewEngine.GetHtml(layout, viewModel, "");
+            viewContent = this.viewEngine.GetHtml(viewContent, viewModel, "");
+            var responseHtml = layout.Replace("___VIEW___", viewContent);
+
+            return responseHtml;
         }
     }
 }
