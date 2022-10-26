@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebServer.MvcFramework.Users;
 
 namespace BattleCards.Data.Models
 {
-    public class User
+    public class User : UserIdentity
     {
         public User()
         {
