@@ -49,10 +49,18 @@ namespace WebServer.MvcFramework
 
         public HttpResponse Error(string errorMessage)
         {
+            var viewContent = $"<div class=\"alert alert-danger\" role=\"alert\">{errorMessage}</div>";
 
+            var responseHtml = InsertViewInLayout(viewContent);
+
+            var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
+
+            HttpResponse response = new HttpResponse("text/html", responseBodyBytes, HttpStatusCode.InternalServerError);
+
+            return response;
         }
 
-        private string InsertViewInLayout(string viewContent, object viewModel)
+        private string InsertViewInLayout(string viewContent, object viewModel = null)
         {
             var layout = System.IO.File.ReadAllText($"Views/Shared/_Layout.cshtml");
             layout = layout.Replace("@RenderBody()", "___VIEW___");
