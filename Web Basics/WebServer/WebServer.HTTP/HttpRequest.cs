@@ -5,10 +5,13 @@ namespace WebServer.HTTP
 {
     public class HttpRequest
     {
+        public static IDictionary<string, Dictionary<string, string>> Sessions = new Dictionary<string, Dictionary<string, string>>();
+
         public HttpRequest(string requestString)
         {
             this.Headers = new List<Header>();
             this.Cookies = new List<Cookie>();
+            this.FormData = new Dictionary<string, string>();
 
             var lines = requestString
                 .Split(new string[] { HttpConstants.NewLine }, StringSplitOptions.None);
@@ -60,8 +63,6 @@ namespace WebServer.HTTP
             }
 
             this.Body = requestBody.ToString();
-
-            this.FormData = new Dictionary<string, string>();
 
             var parameters = this.Body.Split(new string[] { "&" }, StringSplitOptions.RemoveEmptyEntries);
 
