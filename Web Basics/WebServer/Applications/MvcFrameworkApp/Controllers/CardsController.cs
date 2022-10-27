@@ -1,4 +1,6 @@
-﻿using WebServer.HTTP;
+﻿using BattleCards.Data;
+using BattleCards.Data.Models;
+using WebServer.HTTP;
 using WebServer.MvcFramework;
 using WebServer.MvcFramework.Attributes;
 
@@ -14,7 +16,22 @@ namespace BattleCards.Controllers
         [HttpPost("/Cards/Add")]
         public HttpResponse DoAdd()
         {
-            var requst = this.Request;
+            var context = new ApplicationDataContext();
+
+            if (this.Request.FormData["name"].Length < 5)
+            {
+                return this.Error("Name must be at least five characters long!");
+            }
+
+            context.Cards.Add(new Card
+            {
+                Attack = int.Parse(this.Request.FormData["attack"]),
+                Health = int.Parse(this.Request.FormData["health"]),
+                Description = this.Request.FormData["description"],
+                Name = this.Request.FormData["name"],
+                ImageUrl = this.Request.FormData["image"],
+                Keyword = this.Request.FormData["keyword"]
+            });
 
             return this.View();
         }
