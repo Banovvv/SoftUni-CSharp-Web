@@ -5,7 +5,7 @@ namespace WebServer.HTTP
 {
     public class HttpRequest
     {
-        public static IDictionary<string, Dictionary<string, string>> Sessions = new Dictionary<string, Dictionary<string, string>>();
+        public static IDictionary<string, IDictionary<string, string>> Sessions = new Dictionary<string, IDictionary<string, string>>();
 
         public HttpRequest(string requestString)
         {
@@ -66,11 +66,17 @@ namespace WebServer.HTTP
                 .Where(x => x.Name == HttpConstants.SessionCookieName)
                 .FirstOrDefault();
 
-            if (sessionCookie == null)
+            if (sessionCookie == null || Sessions.ContainsKey(sessionCookie.Value))
             {
                 var sessionId = Guid.NewGuid().ToString();
-                Sessions.Add(sessionId, new Dictionary<string, string>());
+                this.Session = new Dictionary<string, string>();
+
+                Sessions.Add(sessionId, this.Session);
                 this.Cookies.Add(new Cookie(HttpConstants.SessionCookieName, sessionId));
+            }
+            else
+            {
+                this.Session = Sessions[sessionCookie.Value];
             }
 
             this.Body = requestBody.ToString();
@@ -100,6 +106,7 @@ namespace WebServer.HTTP
         public ICollection<Header> Headers { get; set; }
         public ICollection<Cookie> Cookies { get; set; }
         public IDictionary<string, string> FormData { get; set; }
+        public IDictionary<string, string> Session { get; set; }
         public string Body { get; set; }
     }
 }
