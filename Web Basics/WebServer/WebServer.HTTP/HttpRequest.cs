@@ -62,6 +62,17 @@ namespace WebServer.HTTP
                 }
             }
 
+            var sessionCookie = this.Cookies
+                .Where(x => x.Name == HttpConstants.SessionCookieName)
+                .FirstOrDefault();
+
+            if (sessionCookie == null)
+            {
+                var sessionId = Guid.NewGuid().ToString();
+                Sessions.Add(sessionId, new Dictionary<string, string>());
+                this.Cookies.Add(new Cookie(HttpConstants.SessionCookieName, sessionId));
+            }
+
             this.Body = requestBody.ToString();
 
             var parameters = this.Body.Split(new string[] { "&" }, StringSplitOptions.RemoveEmptyEntries);
