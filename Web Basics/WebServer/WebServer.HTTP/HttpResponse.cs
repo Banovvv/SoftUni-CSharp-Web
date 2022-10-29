@@ -1,5 +1,4 @@
-﻿using System.Net.Mime;
-using System.Text;
+﻿using System.Text;
 
 namespace WebServer.HTTP
 {
@@ -10,7 +9,7 @@ namespace WebServer.HTTP
             this.Body = new byte[0];
             this.StatusCode = statusCode;
             this.Headers = new List<Header>();
-            this.Cookies = new List<ResponseCookie>();
+            this.Cookies = new List<Cookie>();
         }
 
         public HttpResponse(string contentType, byte[] body, HttpStatusCode statusCode = HttpStatusCode.OK)
@@ -30,12 +29,12 @@ namespace WebServer.HTTP
                 new Header( "Content-Length", body.Length.ToString() )
             };
 
-            this.Cookies = new List<ResponseCookie>();
+            this.Cookies = new List<Cookie>();
         }
 
         public HttpStatusCode StatusCode { get; set; }
         public ICollection<Header> Headers { get; set; }
-        public ICollection<ResponseCookie> Cookies { get; set; }
+        public ICollection<Cookie> Cookies { get; set; }
         public byte[] Body { get; set; }
 
         public override string ToString()

@@ -78,6 +78,15 @@ namespace WebServer.HTTP
                         response = new HttpResponse("text/html", new byte[0], HttpStatusCode.NotFound);
                     }
 
+                    var sessionCookie = request.Cookies
+                        .Where(x => x.Name == HttpConstants.SessionCookieName)
+                        .FirstOrDefault();
+
+                    if (sessionCookie != null)
+                    {
+                        response.Cookies.Add(sessionCookie);
+                    }
+
                     var responseHeaderBytes = Encoding.UTF8.GetBytes(response.ToString());
 
                     await stream.WriteAsync(responseHeaderBytes, 0, responseHeaderBytes.Length);
