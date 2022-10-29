@@ -5,7 +5,7 @@ namespace WebServer.HTTP
 {
     public class HttpRequest
     {
-        public static IDictionary<string, IDictionary<string, string>> Sessions = new Dictionary<string, IDictionary<string, string>>();
+        public static IDictionary<string, Dictionary<string, string>> Sessions = new Dictionary<string, Dictionary<string, string>>();
 
         public HttpRequest(string requestString)
         {
@@ -106,7 +106,7 @@ namespace WebServer.HTTP
         public ICollection<Header> Headers { get; set; }
         public ICollection<Cookie> Cookies { get; set; }
         public IDictionary<string, string> FormData { get; set; }
-        public IDictionary<string, string> Session { get; set; }
+        public Dictionary<string, string> Session { get; set; }
         public string Body { get; set; }
     }
 }
