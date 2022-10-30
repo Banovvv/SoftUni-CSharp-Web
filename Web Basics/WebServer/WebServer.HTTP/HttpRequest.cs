@@ -66,13 +66,18 @@ namespace WebServer.HTTP
                 .Where(x => x.Name == HttpConstants.SessionCookieName)
                 .FirstOrDefault();
 
-            if (sessionCookie == null || Sessions.ContainsKey(sessionCookie.Value))
+            if (sessionCookie == null)
             {
                 var sessionId = Guid.NewGuid().ToString();
                 this.Session = new Dictionary<string, string>();
 
                 Sessions.Add(sessionId, this.Session);
                 this.Cookies.Add(new Cookie(HttpConstants.SessionCookieName, sessionId));
+            }
+            else if (!Sessions.ContainsKey(sessionCookie.Value))
+            {
+                this.Session = new Dictionary<string, string>();
+                Sessions.Add(sessionCookie.Value, this.Session);
             }
             else
             {
