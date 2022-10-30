@@ -1,4 +1,6 @@
-﻿using WebServer.HTTP;
+﻿using BattleCards.Data;
+using Microsoft.EntityFrameworkCore;
+using WebServer.HTTP;
 using WebServer.MvcFramework;
 
 namespace BattleCards
@@ -11,6 +13,7 @@ namespace BattleCards
 
         public void Configure(List<Route> routeTable)
         {
+            new ApplicationDataContext().Database.Migrate();
         }
     }
 }
