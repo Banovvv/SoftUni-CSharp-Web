@@ -33,6 +33,8 @@ namespace BattleCards.Controllers
                 Keyword = this.Request.FormData["keyword"]
             });
 
+            context.SaveChangesAsync();
+
             return this.View();
         }
 
