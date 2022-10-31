@@ -3,7 +3,7 @@ using WebServer.MvcFramework.Users;
 
 namespace BattleCards.Data.Models
 {
-    public class User : UserIdentity
+    public class User : UserIdentity<string>
     {
         public User()
         {

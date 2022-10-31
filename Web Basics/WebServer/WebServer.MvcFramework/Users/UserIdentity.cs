@@ -2,9 +2,9 @@
 
 namespace WebServer.MvcFramework.Users
 {
-    public class UserIdentity
+    public class UserIdentity<T>
     {
-        public string Id { get; set; }
+        public T Id { get; set; }
         [Required]
         [MaxLength(20)]
         public string Username { get; set; }
