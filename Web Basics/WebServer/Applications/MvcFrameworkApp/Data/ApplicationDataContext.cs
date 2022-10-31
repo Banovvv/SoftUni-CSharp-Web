@@ -16,7 +16,6 @@ namespace BattleCards.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Card> Cards { get; set; }
-        public DbSet<UserCard> UserCards { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,8 +28,6 @@ namespace BattleCards.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserCard>()
-                .HasKey(x => new { x.UserId, x.Card });
         }
     }
 }
