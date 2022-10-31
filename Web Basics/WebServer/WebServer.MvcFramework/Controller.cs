@@ -16,7 +16,7 @@ namespace WebServer.MvcFramework
 
         public HttpRequest Request { get; set; }
 
-        public HttpResponse View(object viewModel = null, [CallerMemberName] string viewPath = "")
+        protected HttpResponse View(object viewModel = null, [CallerMemberName] string viewPath = "")
         {
             var viewContent = System.IO.File
                 .ReadAllText($"Views/{this.GetType().Name.Replace("Controller", string.Empty)}/{viewPath}.cshtml");
@@ -30,7 +30,7 @@ namespace WebServer.MvcFramework
             return response;
         }
 
-        public HttpResponse File(string filePath, string fileType)
+        protected HttpResponse File(string filePath, string fileType)
         {
             var iconBytes = System.IO.File.ReadAllBytes(filePath);
 
@@ -39,7 +39,7 @@ namespace WebServer.MvcFramework
             return response;
         }
 
-        public HttpResponse Redirect(string url)
+        protected HttpResponse Redirect(string url)
         {
             HttpResponse response = new HttpResponse(HttpStatusCode.Found);
             response.Headers.Add(new Header("Location", url));
@@ -47,7 +47,7 @@ namespace WebServer.MvcFramework
             return response;
         }
 
-        public HttpResponse Error(string errorMessage)
+        protected HttpResponse Error(string errorMessage)
         {
             var viewContent = $"<div class=\"alert alert-danger\" role=\"alert\">{errorMessage}</div>";
 
@@ -58,6 +58,16 @@ namespace WebServer.MvcFramework
             HttpResponse response = new HttpResponse("text/html", responseBodyBytes, HttpStatusCode.InternalServerError);
 
             return response;
+        }
+
+        protected void SignIn(string userId)
+        {
+
+        }
+
+        protected void SignOut()
+        {
+
         }
 
         private string InsertViewInLayout(string viewContent, object viewModel = null)
