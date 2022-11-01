@@ -8,6 +8,7 @@ namespace WebServer.MvcFramework
     public abstract class Controller
     {
         private readonly WebServerViewEngine viewEngine;
+        private const string UserIdSessionName = "UserId";
 
         public Controller()
         {
@@ -62,12 +63,27 @@ namespace WebServer.MvcFramework
 
         protected void SignIn(string userId)
         {
-
+            this.Request.Session[UserIdSessionName] = userId;
         }
 
         protected void SignOut()
         {
+            this.Request.Session[UserIdSessionName] = null;
+        }
 
+        protected bool IsSignedIn()
+        {
+            return this.Request.Session.ContainsKey(UserIdSessionName);
+        }
+
+        protected string GetUserId()
+        {
+            if (this.Request.Session.ContainsKey(UserIdSessionName))
+            {
+                return this.Request.Session[UserIdSessionName];
+            }
+
+            return null;
         }
 
         private string InsertViewInLayout(string viewContent, object viewModel = null)
