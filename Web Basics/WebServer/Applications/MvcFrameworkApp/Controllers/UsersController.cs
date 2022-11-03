@@ -22,7 +22,7 @@ namespace BattleCards.Controllers
         }
 
         [HttpPost("Users/Register")]
-        public HttpResponse DoRegistern()
+        public HttpResponse DoRegister()
         {
             // TODO: read data
             // TODO: check user
