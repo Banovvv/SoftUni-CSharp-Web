@@ -90,8 +90,8 @@ namespace WebServer.MvcFramework
         {
             var layout = System.IO.File.ReadAllText($"Views/Shared/_Layout.cshtml");
             layout = layout.Replace("@RenderBody()", "___VIEW___");
-            layout = this.viewEngine.GetHtml(layout, viewModel, "");
-            viewContent = this.viewEngine.GetHtml(viewContent, viewModel, "");
+            layout = this.viewEngine.GetHtml(layout, viewModel, this.GetUserId());
+            viewContent = this.viewEngine.GetHtml(viewContent, viewModel, this.GetUserId());
             var responseHtml = layout.Replace("___VIEW___", viewContent);
 
             return responseHtml;
