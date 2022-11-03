@@ -15,8 +15,14 @@ namespace BattleCards.Controllers
             return this.View();
         }
 
-        [HttpPost]
+        [HttpPost("Users/Login")]
         public HttpResponse DoLogin()
+        {
+            return this.Redirect("/");
+        }
+
+        [HttpPost("Users/Register")]
+        public HttpResponse DoRegistern()
         {
             // TODO: read data
             // TODO: check user
