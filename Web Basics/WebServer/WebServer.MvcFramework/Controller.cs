@@ -78,12 +78,12 @@ namespace WebServer.MvcFramework
 
         protected string GetUserId()
         {
-            if (this.Request.Session.ContainsKey(UserIdSessionName))
+            if (!this.Request.Session.ContainsKey(UserIdSessionName))
             {
-                return this.Request.Session[UserIdSessionName];
+                return null;
             }
 
-            return null;
+            return this.Request.Session[UserIdSessionName];
         }
 
         private string InsertViewInLayout(string viewContent, object viewModel = null)
