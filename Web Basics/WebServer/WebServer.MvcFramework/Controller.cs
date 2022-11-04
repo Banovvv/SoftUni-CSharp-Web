@@ -73,7 +73,8 @@ namespace WebServer.MvcFramework
 
         protected bool IsSignedIn()
         {
-            return this.Request.Session.ContainsKey(UserIdSessionName);
+            return this.Request.Session.ContainsKey(UserIdSessionName) &&
+                   this.Request.Session[UserIdSessionName] != null;
         }
 
         protected string GetUserId()
