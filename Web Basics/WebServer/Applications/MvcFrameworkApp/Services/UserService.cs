@@ -48,16 +48,16 @@ namespace BattleCards.Services
             return false;
         }
 
-        public bool IsEmailAvailable(string email)
+        public async Task<bool> IsEmailAvailable(string email)
         {
-            return !this.context.Users
-                .Any(x => x.Email == email);
+            return !await this.context.Users
+                .AnyAsync(x => x.Email == email);
         }
 
-        public bool IsUsernameAvailable(string username)
+        public async Task<bool> IsUsernameAvailable(string username)
         {
-            return !this.context.Users
-                .Any(x => x.Username == username);
+            return !await this.context.Users
+                .AnyAsync(x => x.Username == username);
         }
 
         private static string EncryptPassword(string input)
