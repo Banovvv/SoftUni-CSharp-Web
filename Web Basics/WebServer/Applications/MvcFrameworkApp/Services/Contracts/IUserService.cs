@@ -4,7 +4,7 @@
     {
         bool IsEmailAvailable(string email);
         bool IsUsernameAvailable(string username);
-        bool IsUserValid(string username, string password);
-        void CreateUser(string username, string email, string password);
+        Task<bool> IsUserValidAsync(string username, string password);
+        Task CreateUserAsync(string username, string email, string password);
     }
 }
