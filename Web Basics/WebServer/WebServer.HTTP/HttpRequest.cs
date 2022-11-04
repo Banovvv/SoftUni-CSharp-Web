@@ -95,7 +95,7 @@ namespace WebServer.HTTP
                     break;
                 }
 
-                var parameterParts = parameter.Split('=');
+                var parameterParts = parameter.Split(new char[] { '=' }, 2);
                 var name = parameterParts[0];
                 var value = WebUtility.UrlDecode(parameterParts[1]);
 
