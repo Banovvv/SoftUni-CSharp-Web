@@ -1,5 +1,6 @@
 ﻿using BattleCards.Services;
 using BattleCards.Services.Contracts;
+using System.Text.RegularExpressions;
 using WebServer.HTTP;
 using WebServer.MvcFramework;
 using WebServer.MvcFramework.Attributes;
@@ -55,6 +56,11 @@ namespace BattleCards.Controllers
             if (username == null || username.Length < 5 || username.Length > 20)
             {
                 return this.Error("Username should be between 5 and 20 characters!");
+            }
+
+            if (Regex.IsMatch(username, "[a-zA-Z0-9]+"))
+            {
+                return this.Error("Username contains forbidden characters!");
             }
 
             if (password != confirmPassword)
