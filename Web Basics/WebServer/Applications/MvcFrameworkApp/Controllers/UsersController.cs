@@ -58,9 +58,14 @@ namespace BattleCards.Controllers
                 return this.Error("Username should be between 5 and 20 characters!");
             }
 
-            if (Regex.IsMatch(username, "[a-zA-Z0-9]+"))
+            if (!Regex.IsMatch(username, "[a-zA-Z0-9]+"))
             {
                 return this.Error("Username contains forbidden characters!");
+            }
+
+            if (!this.service.IsValidEmail(email))
+            {
+                return this.Error("Invalid email address");
             }
 
             if (password != confirmPassword)

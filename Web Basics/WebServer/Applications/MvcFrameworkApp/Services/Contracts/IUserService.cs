@@ -2,6 +2,7 @@
 {
     public interface IUserService
     {
+        bool IsValidEmail(string email);
         Task<bool> IsEmailAvailableAsync(string email);
         Task<bool> IsUsernameAvailableAsync(string username);
         Task<string> GetUserIdAsync(string username, string password);

@@ -2,6 +2,7 @@
 using BattleCards.Data.Models;
 using BattleCards.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -48,6 +49,25 @@ namespace BattleCards.Services
         {
             return !await this.context.Users
                 .AnyAsync(x => x.Username == username);
+        }
+
+        public bool IsValidEmail(string email)
+        {
+            var trimmedEmail = email.Trim();
+
+            if (trimmedEmail.EndsWith("."))
+            {
+                return false;
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == trimmedEmail;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static string EncryptPassword(string input)
