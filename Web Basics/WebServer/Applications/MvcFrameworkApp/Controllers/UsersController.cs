@@ -1,4 +1,6 @@
-﻿using WebServer.HTTP;
+﻿using BattleCards.Services;
+using BattleCards.Services.Contracts;
+using WebServer.HTTP;
 using WebServer.MvcFramework;
 using WebServer.MvcFramework.Attributes;
 
@@ -6,6 +8,13 @@ namespace BattleCards.Controllers
 {
     public class UsersController : Controller
     {
+        private readonly IUserService service;
+
+        public UsersController()
+        {
+            this.service = new UserService();
+        }
+
         public HttpResponse Login()
         {
             return this.View();
@@ -16,8 +25,20 @@ namespace BattleCards.Controllers
         }
 
         [HttpPost("Users/Login")]
-        public HttpResponse DoLogin()
+        public async Task<HttpResponse> DoLogin()
         {
+            var username = this.Request.FormData["username"];
+            var password = this.Request.FormData["password"];
+
+            var userId = await this.service.GetUserIdAsync(username, password);
+
+            if (userId == null)
+            {
+                return this.Error("Invalid username or password!");
+
+            }
+
+            this.SignIn(userId);
             return this.Redirect("/");
         }
 

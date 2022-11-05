@@ -4,7 +4,7 @@
     {
         Task<bool> IsEmailAvailable(string email);
         Task<bool> IsUsernameAvailable(string username);
-        Task<bool> IsUserValidAsync(string username, string password);
+        Task<string> GetUserIdAsync(string username, string password);
         Task CreateUserAsync(string username, string email, string password);
     }
 }

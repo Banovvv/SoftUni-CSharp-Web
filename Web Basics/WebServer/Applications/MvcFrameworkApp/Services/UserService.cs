@@ -29,23 +29,13 @@ namespace BattleCards.Services
             await this.context.SaveChangesAsync();
         }
 
-        public async Task<bool> IsUserValidAsync(string username, string password)
+        public async Task<string> GetUserIdAsync(string username, string password)
         {
             var user = await this.context.Users
                 .Where(x => x.Username == username)
                 .FirstOrDefaultAsync();
 
-            if (user == null)
-            {
-                throw new ArgumentException("No such user!");
-            }
-
-            if (user.Password == EncryptPassword(password))
-            {
-                return true;
-            }
-
-            return false;
+            return user?.Id;
         }
 
         public async Task<bool> IsEmailAvailable(string email)
