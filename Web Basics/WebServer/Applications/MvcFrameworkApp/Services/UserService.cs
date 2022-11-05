@@ -38,13 +38,13 @@ namespace BattleCards.Services
             return user?.Id;
         }
 
-        public async Task<bool> IsEmailAvailable(string email)
+        public async Task<bool> IsEmailAvailableAsync(string email)
         {
             return !await this.context.Users
                 .AnyAsync(x => x.Email == email);
         }
 
-        public async Task<bool> IsUsernameAvailable(string username)
+        public async Task<bool> IsUsernameAvailableAsync(string username)
         {
             return !await this.context.Users
                 .AnyAsync(x => x.Username == username);
