@@ -46,7 +46,6 @@ namespace BattleCards.Controllers
         [HttpPost("Users/Register")]
         public async Task<HttpResponse> DoRegister()
         {
-            // TODO: read data
             var username = this.Request.FormData["username"];
             var email = this.Request.FormData["email"];
             var password = this.Request.FormData["password"];
