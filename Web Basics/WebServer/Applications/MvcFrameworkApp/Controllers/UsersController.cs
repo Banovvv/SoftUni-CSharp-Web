@@ -25,11 +25,11 @@ namespace BattleCards.Controllers
             return this.View();
         }
 
-        [HttpPost("users/login")]
+        [HttpPost("/Users/Login")]
         public async Task<HttpResponse> DoLogin()
         {
-            var username = this.Request.FormData["username"];
-            var password = this.Request.FormData["password"];
+            var username = this.Request.FormData["Username"];
+            var password = this.Request.FormData["Password"];
 
             var userId = await this.service.GetUserIdAsync(username, password);
 
@@ -43,7 +43,7 @@ namespace BattleCards.Controllers
             return this.Redirect("/");
         }
 
-        [HttpPost("Users/Register")]
+        [HttpPost("/Users/Register")]
         public async Task<HttpResponse> DoRegister()
         {
             var username = this.Request.FormData["username"];
@@ -57,7 +57,7 @@ namespace BattleCards.Controllers
                 return this.Error("Username should be between 5 and 20 characters!");
             }
 
-            if (!Regex.IsMatch(username, "[a-zA-Z0-9]+"))
+            if (!Regex.IsMatch(username, "^[a-zA-Z0-9]+$"))
             {
                 return this.Error("Username contains forbidden characters!");
             }

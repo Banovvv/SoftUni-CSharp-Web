@@ -38,6 +38,11 @@ namespace BattleCards.Services
                 .Where(x => x.Username == username)
                 .FirstOrDefaultAsync();
 
+            if (user?.Password != EncryptPassword(password))
+            {
+                return null;
+            }
+
             return user?.Id;
         }
 

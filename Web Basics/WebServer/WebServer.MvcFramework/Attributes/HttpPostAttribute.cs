@@ -13,6 +13,6 @@ namespace WebServer.MvcFramework.Attributes
             this.Url = url;
         }
 
-        public override HttpMethod Method => HttpMethod.Post;
+        public override HttpMethod Method => HttpMethod.POST;
     }
 }
