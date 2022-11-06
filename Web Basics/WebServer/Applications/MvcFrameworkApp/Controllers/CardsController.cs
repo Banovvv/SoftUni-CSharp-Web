@@ -40,11 +40,16 @@ namespace BattleCards.Controllers
 
             await context.SaveChangesAsync();
 
-            return this.View();
+            return this.Redirect("/Cards/All");
         }
 
         public HttpResponse All()
         {
+            if (this.IsSignedIn())
+            {
+                return this.Redirect("/Users/Login");
+            }
+
             return this.View();
         }
 

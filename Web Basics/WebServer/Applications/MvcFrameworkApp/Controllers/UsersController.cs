@@ -38,6 +38,11 @@ namespace BattleCards.Controllers
         [HttpPost("/Users/Login")]
         public async Task<HttpResponse> DoLogin()
         {
+            if (this.IsSignedIn())
+            {
+                return this.Redirect("/");
+            }
+
             var username = this.Request.FormData["Username"];
             var password = this.Request.FormData["Password"];
 
@@ -56,6 +61,11 @@ namespace BattleCards.Controllers
         [HttpPost("/Users/Register")]
         public async Task<HttpResponse> DoRegister()
         {
+            if (this.IsSignedIn())
+            {
+                return this.Redirect("/");
+            }
+
             var username = this.Request.FormData["username"];
             var email = this.Request.FormData["email"];
             var password = this.Request.FormData["password"];
