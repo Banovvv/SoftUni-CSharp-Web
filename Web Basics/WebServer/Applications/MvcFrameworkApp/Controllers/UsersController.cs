@@ -18,10 +18,20 @@ namespace BattleCards.Controllers
 
         public HttpResponse Login()
         {
+            if (this.IsSignedIn())
+            {
+                return this.Redirect("/");
+            }
+
             return this.View();
         }
         public HttpResponse Register()
         {
+            if (this.IsSignedIn())
+            {
+                return this.Redirect("/");
+            }
+
             return this.View();
         }
 
