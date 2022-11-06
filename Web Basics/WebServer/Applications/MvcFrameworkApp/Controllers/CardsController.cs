@@ -10,11 +10,16 @@ namespace BattleCards.Controllers
     {
         public HttpResponse Add()
         {
+            if (this.IsSignedIn())
+            {
+                return this.Redirect("/Users/Login");
+            }
+
             return this.View();
         }
 
         [HttpPost("/Cards/Add")]
-        public HttpResponse DoAdd()
+        public async Task<HttpResponse> DoAddAsync()
         {
             var context = new ApplicationDataContext();
 
@@ -33,7 +38,7 @@ namespace BattleCards.Controllers
                 Keyword = this.Request.FormData["keyword"]
             });
 
-            context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return this.View();
         }
@@ -45,6 +50,11 @@ namespace BattleCards.Controllers
 
         public HttpResponse Collection()
         {
+            if (this.IsSignedIn())
+            {
+                return this.Redirect("/Users/Login");
+            }
+
             return this.View();
         }
     }
