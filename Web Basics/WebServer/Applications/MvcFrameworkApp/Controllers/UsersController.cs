@@ -88,9 +88,10 @@ namespace BattleCards.Controllers
                 return this.Error("Emails is already taken!");
             }
             #endregion
-            // TODO: log user in
 
-            return this.Redirect("/");
+            await this.service.CreateUserAsync(username, email, password);
+
+            return this.Redirect("/Users/Login");
         }
 
         public HttpResponse Logout()

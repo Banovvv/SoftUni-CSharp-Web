@@ -17,7 +17,7 @@ namespace BattleCards.Services
             this.context = new ApplicationDataContext();
         }
 
-        public async Task CreateUserAsync(string username, string email, string password)
+        public async Task<string> CreateUserAsync(string username, string email, string password)
         {
             var user = new User
             {
@@ -28,6 +28,8 @@ namespace BattleCards.Services
 
             this.context.Users.Add(user);
             await this.context.SaveChangesAsync();
+
+            return user.Id;
         }
 
         public async Task<string> GetUserIdAsync(string username, string password)
