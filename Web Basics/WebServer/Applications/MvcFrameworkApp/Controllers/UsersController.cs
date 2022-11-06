@@ -52,7 +52,7 @@ namespace BattleCards.Controllers
             var password = this.Request.FormData["password"];
             var confirmPassword = this.Request.FormData["confirmPassword"];
 
-            // TODO: check user
+            #region Input Data Checks
             if (username == null || username.Length < 5 || username.Length > 20)
             {
                 return this.Error("Username should be between 5 and 20 characters!");
@@ -66,6 +66,11 @@ namespace BattleCards.Controllers
             if (!this.service.IsValidEmail(email))
             {
                 return this.Error("Invalid email address");
+            }
+
+            if (password== null || password.Length < 6 || password.Length > 20)
+            {
+                return this.Error("Password should be between 6 and 20 characters!");
             }
 
             if (password != confirmPassword)
@@ -82,7 +87,7 @@ namespace BattleCards.Controllers
             {
                 return this.Error("Emails is already taken!");
             }
-
+            #endregion
             // TODO: log user in
 
             return this.Redirect("/");
