@@ -84,7 +84,7 @@ namespace WebServer.HTTP
                 this.Session = Sessions[sessionCookie.Value];
             }
 
-            this.Body = requestBody.ToString();
+            this.Body = requestBody.ToString().TrimEnd('\n', '\r');
 
             var parameters = this.Body.Split(new string[] { "&" }, StringSplitOptions.RemoveEmptyEntries);
 
