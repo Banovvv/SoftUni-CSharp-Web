@@ -74,7 +74,6 @@ namespace WebServer.HTTP
                     }
                     else
                     {
-                        // TODO: 404
                         response = new HttpResponse("text/html", new byte[0], HttpStatusCode.NotFound);
                     }
 

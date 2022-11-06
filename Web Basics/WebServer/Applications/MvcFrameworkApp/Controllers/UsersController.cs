@@ -66,10 +66,10 @@ namespace BattleCards.Controllers
                 return this.Redirect("/");
             }
 
-            var username = this.Request.FormData["username"];
-            var email = this.Request.FormData["email"];
-            var password = this.Request.FormData["password"];
-            var confirmPassword = this.Request.FormData["confirmPassword"];
+            var username = this.Request.FormData["Username"];
+            var email = this.Request.FormData["Email"];
+            var password = this.Request.FormData["Password"];
+            var confirmPassword = this.Request.FormData["ConfirmPassword"];
 
             #region Input Data Checks
             if (username == null || username.Length < 5 || username.Length > 20)
