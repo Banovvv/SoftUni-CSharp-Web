@@ -1,5 +1,6 @@
 ﻿using WebServer.HTTP;
 using WebServer.MvcFramework.Attributes;
+using WebServer.MvcFramework.Contracts;
 using HttpMethod = WebServer.HTTP.HttpMethod;
 
 namespace WebServer.MvcFramework

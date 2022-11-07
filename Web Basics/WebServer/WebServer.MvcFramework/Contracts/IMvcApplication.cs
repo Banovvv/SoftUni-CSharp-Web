@@ -1,10 +1,10 @@
 ﻿using WebServer.HTTP;
 
-namespace WebServer.MvcFramework
+namespace WebServer.MvcFramework.Contracts
 {
     public interface IMvcApplication
     {
-        void ConfigureServices();
+        void ConfigureServices(IServiceCollection serviceCollection);
         void Configure(List<Route> routeTable);
     }
 }
