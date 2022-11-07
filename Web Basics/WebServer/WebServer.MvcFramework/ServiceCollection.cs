@@ -11,9 +11,9 @@ namespace WebServer.MvcFramework
             this.dependencyContainer[typeof(TSource)] = typeof(TDestination);
         }
 
-        public object CreateInstance()
+        public object CreateInstance(Type type)
         {
-            throw new NotImplementedException();
+            return Activator.CreateInstance(type);
         }
     }
 }
