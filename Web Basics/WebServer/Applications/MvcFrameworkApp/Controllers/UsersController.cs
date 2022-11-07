@@ -1,5 +1,4 @@
-﻿using BattleCards.Services;
-using BattleCards.Services.Contracts;
+﻿using BattleCards.Services.Contracts;
 using System.Text.RegularExpressions;
 using WebServer.HTTP;
 using WebServer.MvcFramework;
@@ -13,7 +12,7 @@ namespace BattleCards.Controllers
 
         public UsersController(IUserService service)
         {
-             this.service = service; 
+            this.service = service;
         }
 
         public HttpResponse Login()
