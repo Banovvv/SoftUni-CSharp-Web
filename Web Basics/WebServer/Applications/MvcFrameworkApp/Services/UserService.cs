@@ -2,7 +2,6 @@
 using BattleCards.Data.Models;
 using BattleCards.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -12,9 +11,9 @@ namespace BattleCards.Services
     {
         private readonly ApplicationDataContext context;
 
-        public UserService()
+        public UserService(ApplicationDataContext context)
         {
-            this.context = new ApplicationDataContext();
+            this.context = context;
         }
 
         public async Task<string> CreateUserAsync(string username, string email, string password)

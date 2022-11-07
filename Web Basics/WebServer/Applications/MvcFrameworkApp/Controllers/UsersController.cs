@@ -11,9 +11,9 @@ namespace BattleCards.Controllers
     {
         private readonly IUserService service;
 
-        public UsersController()
+        public UsersController(IUserService service)
         {
-            this.service = new UserService();
+             this.service = service; 
         }
 
         public HttpResponse Login()
@@ -87,7 +87,7 @@ namespace BattleCards.Controllers
                 return this.Error("Invalid email address");
             }
 
-            if (password== null || password.Length < 6 || password.Length > 20)
+            if (password == null || password.Length < 6 || password.Length > 20)
             {
                 return this.Error("Password should be between 6 and 20 characters!");
             }

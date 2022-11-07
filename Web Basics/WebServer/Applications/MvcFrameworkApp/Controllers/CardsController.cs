@@ -8,6 +8,13 @@ namespace BattleCards.Controllers
 {
     public class CardsController : Controller
     {
+        private readonly ApplicationDataContext context;
+
+        public CardsController(ApplicationDataContext context)
+        {
+            this.context = context;
+        }
+
         public HttpResponse Add()
         {
             if (this.IsSignedIn())
@@ -21,14 +28,12 @@ namespace BattleCards.Controllers
         [HttpPost("/Cards/Add")]
         public async Task<HttpResponse> DoAddAsync()
         {
-            var context = new ApplicationDataContext();
-
             if (this.Request.FormData["name"].Length < 5)
             {
                 return this.Error("Name must be at least five characters long!");
             }
 
-            context.Cards.Add(new Card
+            this.context.Cards.Add(new Card
             {
                 Attack = int.Parse(this.Request.FormData["attack"]),
                 Health = int.Parse(this.Request.FormData["health"]),
@@ -38,7 +43,7 @@ namespace BattleCards.Controllers
                 Keyword = this.Request.FormData["keyword"]
             });
 
-            await context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
 
             return this.Redirect("/Cards/All");
         }
