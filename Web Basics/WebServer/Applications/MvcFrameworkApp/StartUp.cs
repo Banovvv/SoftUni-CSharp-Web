@@ -13,6 +13,7 @@ namespace BattleCards
         {
             services.Add<IUserService, UserService>();
             services.Add<ICardService, CardService>();
+            services.Add<ApplicationDataContext, ApplicationDataContext>();
         }
 
         public void Configure(List<Route> routeTable)

@@ -13,17 +13,18 @@ namespace WebServer.MvcFramework
             IServiceCollection services = new ServiceCollection();
 
             RegisterStaticFiles(routeTable);
-            RegisterControllerRoutes(routeTable, application);
 
             application.ConfigureServices(services);
             application.Configure(routeTable);
+
+            RegisterControllerRoutes(routeTable, application, services);
 
             IHttpServer server = new HttpServer(routeTable);
 
             await server.StartAsync(port);
         }
 
-        private static void RegisterControllerRoutes(List<Route> routeTable, IMvcApplication application)
+        private static void RegisterControllerRoutes(List<Route> routeTable, IMvcApplication application, IServiceCollection services)
         {
             var controllerTypes = application.GetType().Assembly.GetTypes()
                 .Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(Controller)));
@@ -56,7 +57,7 @@ namespace WebServer.MvcFramework
 
                     routeTable.Add(new Route(url, httpMethod, (request) =>
                     {
-                        var instance = Activator.CreateInstance(controllerType) as Controller;
+                        var instance = services.CreateInstance(controllerType) as Controller;
                         instance.Request = request;
                         var response = method.Invoke(instance, new object[] { }) as HttpResponse;
 

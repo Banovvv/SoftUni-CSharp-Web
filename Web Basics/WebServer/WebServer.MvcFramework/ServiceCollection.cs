@@ -18,7 +18,25 @@ namespace WebServer.MvcFramework
                 type = this.dependencyContainer[type];
             }
 
-            return Activator.CreateInstance(type);
+            var constructor = type.GetConstructors()
+                .OrderBy(x => x.GetParameters().Count())
+                .FirstOrDefault();
+
+            var parameters = constructor?.GetParameters();
+            var parameterValues = new List<object>();
+
+            if (parameters != null)
+            {
+                foreach (var parameter in parameters)
+                {
+                    var parameterValue = CreateInstance(parameter.GetType());
+                    parameterValues.Add(parameterValue);
+                }
+            }
+
+            var constructedObject = constructor?.Invoke(parameterValues.ToArray());
+
+            return constructedObject;
         }
     }
 }
