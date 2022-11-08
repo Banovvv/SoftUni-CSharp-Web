@@ -13,6 +13,11 @@ namespace WebServer.MvcFramework
 
         public object CreateInstance(Type type)
         {
+            if (this.dependencyContainer.ContainsKey(type))
+            {
+                type = this.dependencyContainer[type];
+            }
+
             return Activator.CreateInstance(type);
         }
     }

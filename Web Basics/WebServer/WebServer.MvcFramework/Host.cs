@@ -10,11 +10,12 @@ namespace WebServer.MvcFramework
         public static async Task CreateHostAsync(IMvcApplication application, int port)
         {
             List<Route> routeTable = new List<Route>();
+            IServiceCollection services = new ServiceCollection();
 
             RegisterStaticFiles(routeTable);
             RegisterControllerRoutes(routeTable, application);
 
-            application.ConfigureServices();
+            application.ConfigureServices(services);
             application.Configure(routeTable);
 
             IHttpServer server = new HttpServer(routeTable);
