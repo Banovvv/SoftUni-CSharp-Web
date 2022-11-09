@@ -68,13 +68,34 @@ namespace WebServer.MvcFramework
             }
         }
 
-        private static HttpResponse ExecuteAction(HttpRequest request, Type controllerType, MethodInfo method, IServiceCollection services)
+        private static HttpResponse ExecuteAction(HttpRequest request, Type controllerType, MethodInfo action, IServiceCollection services)
         {
             var instance = services.CreateInstance(controllerType) as Controller;
             instance.Request = request;
-            var response = method.Invoke(instance, new object[] { }) as HttpResponse;
+
+            var arguments = new List<object>();
+            var parameters = action.GetParameters();
+
+            foreach (var parameter in parameters)
+            {
+                var parameterValue = GetParameterFromRequest(request, parameter.Name ?? string.Empty);
+
+                arguments.Add(parameterValue);
+            }
+
+            var response = action.Invoke(instance, arguments.ToArray()) as HttpResponse;
 
             return response;
+        }
+
+        private static string GetParameterFromRequest(HttpRequest request, string paramaterName)
+        {
+            if (request.FormData.ContainsKey(paramaterName))
+            {
+                return request.FormData[paramaterName];
+            }
+
+            return null;
         }
 
         private static void RegisterStaticFiles(List<Route> routeTable)
