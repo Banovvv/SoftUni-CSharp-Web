@@ -1,4 +1,5 @@
-﻿using WebServer.HTTP;
+﻿using System.Reflection;
+using WebServer.HTTP;
 using WebServer.MvcFramework.Attributes;
 using WebServer.MvcFramework.Contracts;
 using HttpMethod = WebServer.HTTP.HttpMethod;
@@ -65,6 +66,15 @@ namespace WebServer.MvcFramework
                     }));
                 }
             }
+        }
+
+        private static HttpResponse ExecuteAction(HttpRequest request, Type controllerType, MethodInfo method, IServiceCollection services)
+        {
+            var instance = services.CreateInstance(controllerType) as Controller;
+            instance.Request = request;
+            var response = method.Invoke(instance, new object[] { }) as HttpResponse;
+
+            return response;
         }
 
         private static void RegisterStaticFiles(List<Route> routeTable)
