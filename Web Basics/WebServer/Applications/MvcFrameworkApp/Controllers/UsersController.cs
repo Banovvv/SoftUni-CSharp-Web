@@ -35,15 +35,12 @@ namespace BattleCards.Controllers
         }
 
         [HttpPost("/Users/Login")]
-        public async Task<HttpResponse> DoLogin()
+        public async Task<HttpResponse> DoLogin(string username, string password)
         {
             if (this.IsSignedIn())
             {
                 return this.Redirect("/");
             }
-
-            var username = this.Request.FormData["Username"];
-            var password = this.Request.FormData["Password"];
 
             var userId = await this.service.GetUserIdAsync(username, password);
 
@@ -58,17 +55,12 @@ namespace BattleCards.Controllers
         }
 
         [HttpPost("/Users/Register")]
-        public async Task<HttpResponse> DoRegister()
+        public async Task<HttpResponse> DoRegister(string username, string email, string password, string confirmPassword)
         {
             if (this.IsSignedIn())
             {
                 return this.Redirect("/");
             }
-
-            var username = this.Request.FormData["Username"];
-            var email = this.Request.FormData["Email"];
-            var password = this.Request.FormData["Password"];
-            var confirmPassword = this.Request.FormData["ConfirmPassword"];
 
             #region Input Data Checks
             if (username == null || username.Length < 5 || username.Length > 20)
