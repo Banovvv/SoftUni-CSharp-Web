@@ -26,21 +26,21 @@ namespace BattleCards.Controllers
         }
 
         [HttpPost("/Cards/Add")]
-        public async Task<HttpResponse> DoAddAsync()
+        public async Task<HttpResponse> DoAddAsync(string name, int attack, int health, string description, string image, string keyword)
         {
-            if (this.Request.FormData["name"].Length < 5)
+            if (name.Length < 5)
             {
                 return this.Error("Name must be at least five characters long!");
             }
 
             this.context.Cards.Add(new Card
             {
-                Attack = int.Parse(this.Request.FormData["attack"]),
-                Health = int.Parse(this.Request.FormData["health"]),
-                Description = this.Request.FormData["description"],
-                Name = this.Request.FormData["name"],
-                ImageUrl = this.Request.FormData["image"],
-                Keyword = this.Request.FormData["keyword"]
+                Attack = attack,
+                Health = health,
+                Description = description,
+                Name = name,
+                ImageUrl = image,
+                Keyword = keyword
             });
 
             await this.context.SaveChangesAsync();
