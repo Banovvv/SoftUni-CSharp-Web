@@ -95,6 +95,11 @@ namespace WebServer.MvcFramework
                 return request.FormData[paramaterName];
             }
 
+            if (request.QueryData.ContainsKey(paramaterName))
+            {
+                return request.QueryData[paramaterName];
+            }
+
             return null;
         }
 
