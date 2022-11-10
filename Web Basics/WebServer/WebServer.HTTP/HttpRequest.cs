@@ -12,6 +12,7 @@ namespace WebServer.HTTP
             this.Headers = new List<Header>();
             this.Cookies = new List<Cookie>();
             this.FormData = new Dictionary<string, string>();
+            this.QueryData = new Dictionary<string, string>();
 
             var lines = requestString
                 .Split(new string[] { HttpConstants.NewLine }, StringSplitOptions.None);
@@ -84,9 +85,27 @@ namespace WebServer.HTTP
                 this.Session = Sessions[sessionCookie.Value];
             }
 
+            if (this.Path.Contains("?"))
+            {
+                var pathParts = this.Path.Split(new char[] { '?' }, 2);
+
+                this.Path = pathParts[0];
+                this.Query = pathParts[1];
+            }
+            else
+            {
+                this.Query = string.Empty;
+            }
+
             this.Body = requestBody.ToString().TrimEnd('\n', '\r');
 
-            var parameters = this.Body.Split(new string[] { "&" }, StringSplitOptions.RemoveEmptyEntries);
+            SplitParameters(this.Body, this.FormData);
+            SplitParameters(this.Query, this.QueryData);
+        }
+
+        private static void SplitParameters(string inputParameters, IDictionary<string, string> output)
+        {
+            var parameters = inputParameters.Split(new string[] { "&" }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var parameter in parameters)
             {
@@ -99,18 +118,20 @@ namespace WebServer.HTTP
                 var name = parameterParts[0];
                 var value = WebUtility.UrlDecode(parameterParts[1]);
 
-                if (!this.FormData.ContainsKey(name))
+                if (!output.ContainsKey(name))
                 {
-                    this.FormData.Add(name, value);
+                    output.Add(name, value);
                 }
             }
         }
 
         public string Path { get; set; }
+        public string Query { get; set; }
         public HttpMethod Method { get; set; }
         public ICollection<Header> Headers { get; set; }
         public ICollection<Cookie> Cookies { get; set; }
         public IDictionary<string, string> FormData { get; set; }
+        public IDictionary<string, string> QueryData { get; set; }
         public Dictionary<string, string> Session { get; set; }
         public string Body { get; set; }
     }
