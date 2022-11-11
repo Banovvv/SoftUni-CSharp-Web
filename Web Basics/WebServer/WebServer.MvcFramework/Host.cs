@@ -79,8 +79,12 @@ namespace WebServer.MvcFramework
             foreach (var parameter in parameters)
             {
                 var requestParameter = GetParameterFromRequest(request, parameter.Name ?? string.Empty);
-
                 var parameterValue = Convert.ChangeType(requestParameter, parameter.ParameterType);
+
+                if (parameterValue == null && parameter.ParameterType != typeof(string))
+                {
+
+                }
 
                 arguments.Add(parameterValue);
             }
