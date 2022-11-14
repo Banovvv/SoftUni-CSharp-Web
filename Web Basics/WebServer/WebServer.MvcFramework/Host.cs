@@ -91,6 +91,8 @@ namespace WebServer.MvcFramework
                     {
                         var propertyParameter = GetParameterFromRequest(request, parameter.Name ?? string.Empty);
                         var propertyParameterValue = Convert.ChangeType(requestParameter, parameter.ParameterType);
+
+                        property.SetValue(parameterValue, propertyParameterValue);
                     }
                 }
 
@@ -104,14 +106,22 @@ namespace WebServer.MvcFramework
 
         private static string GetParameterFromRequest(HttpRequest request, string paramaterName)
         {
-            if (request.FormData.ContainsKey(paramaterName))
+            paramaterName = paramaterName.ToLower();
+
+            if (request.FormData.Any(x => x.Key.ToLower() == paramaterName))
             {
-                return request.FormData[paramaterName];
+                return request.FormData
+                    .Where(x => x.Key.ToLower() == paramaterName)
+                    .FirstOrDefault()
+                    .Value;
             }
 
-            if (request.QueryData.ContainsKey(paramaterName))
+            if (request.QueryData.Any(x => x.Key.ToLower() == paramaterName))
             {
-                return request.QueryData[paramaterName];
+                return request.QueryData
+                    .Where(x => x.Key.ToLower() == paramaterName)
+                    .FirstOrDefault()
+                    .Value;
             }
 
             return null;
