@@ -34,8 +34,8 @@ namespace BattleCards.Controllers
             return this.View();
         }
 
-        [HttpPost("/Users/Login")]
-        public async Task<HttpResponse> DoLogin(string username, string password)
+        [HttpPost]
+        public async Task<HttpResponse> Login(string username, string password)
         {
             if (this.IsSignedIn())
             {
@@ -54,8 +54,8 @@ namespace BattleCards.Controllers
             return this.Redirect("/");
         }
 
-        [HttpPost("/Users/Register")]
-        public async Task<HttpResponse> DoRegister(string username, string email, string password, string confirmPassword)
+        [HttpPost]
+        public async Task<HttpResponse> Register(string username, string email, string password, string confirmPassword)
         {
             if (this.IsSignedIn())
             {

@@ -27,7 +27,7 @@ namespace BattleCards.Controllers
         }
 
         [HttpPost("/Cards/Add")]
-        public async Task<HttpResponse> DoAddAsync(CardInputModel inputModel)
+        public async Task<HttpResponse> AddAsync(CardInputModel inputModel)
         {
             if (inputModel.Name.Length < 5)
             {
