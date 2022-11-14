@@ -83,7 +83,15 @@ namespace WebServer.MvcFramework
 
                 if (parameterValue == null && parameter.ParameterType != typeof(string))
                 {
+                    parameterValue = Activator.CreateInstance(parameter.ParameterType);
 
+                    var properties = parameter.ParameterType.GetProperties();
+
+                    foreach (var property in properties)
+                    {
+                        var propertyParameter = GetParameterFromRequest(request, parameter.Name ?? string.Empty);
+                        var propertyParameterValue = Convert.ChangeType(requestParameter, parameter.ParameterType);
+                    }
                 }
 
                 arguments.Add(parameterValue);
